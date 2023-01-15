@@ -13,6 +13,11 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private GameObject _cameraPrefab;
 
+	[SerializeField]
+	private bool _hasControl;
+
+	private Dialogue[] _debugDialogue;
+
 	private CharacterController _characterController;
 	private Animator _animator;
 
@@ -23,21 +28,26 @@ public class Player : MonoBehaviour
 
 	private void Start()
 	{
-		Cursor.lockState = CursorLockMode.Locked;
-
 		//Get The Character Controller & Animator
 		_characterController = GetComponent<CharacterController>();
 		_animator = GetComponent<Animator>();
 
 		Instantiate(_cameraPrefab);
+		GameManager.s_player = this;
+		GiveControl();
+
+		_debugDialogue = new Dialogue[2];
+		_debugDialogue[0] = new Dialogue("This Is A Test");
+		_debugDialogue[1] = new Dialogue("This Is Another Text");
 	}
 
 	private void Update()
 	{
 		//Get The Direction Vector For Adding Velocity Later
-		Vector3 direction = Camera.main.transform.TransformDirection(Vector3.right) * Input.GetAxisRaw("Horizontal") +
-			Camera.main.transform.TransformDirection(Vector3.forward) * Input.GetAxisRaw("Vertical");
-		direction = new Vector3(direction.x, 0, direction.z).normalized;
+		Vector3 direction = Vector3.zero;
+
+		if (_hasControl)
+			direction = GetDirection();
 
 		//When The Player Is Moving, They Will Look Towards The Direction Vector
 		if (direction != Vector3.zero)
@@ -62,10 +72,8 @@ public class Player : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		//A Seperate Vector Is Used To Ensure That The Player Won't Be Able To Flip The Camera Upside Down
-		if (Mathf.Abs(_cameraDampedRotation.y) < _cameraMaxSpeed)
-			_cameraRotation += new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * _cameraSensitivity;
-		_cameraRotation = new Vector2(Mathf.Clamp(_cameraRotation.x, -30, 30), _cameraRotation.y);
+		if (_hasControl)
+			UpdateCamera();
 
 		//This Is Responsible For Smoothly Rotating The Camera
 		Camera.main.transform.rotation = Quaternion.Euler(
@@ -77,25 +85,69 @@ public class Player : MonoBehaviour
 		Camera.main.transform.position = transform.position + Camera.main.transform.rotation * _cameraPosition;
 
 		//This Will Ensure That The Camera Won't Be Behind An Object
-		RaycastHit[] walls = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward, Mathf.Abs(_cameraPosition.z));
+		RaycastHit hit;
 
-		if (walls.Length > 0)
-			Camera.main.transform.position = GetClosestRayPoint(walls);
-		Camera.main.transform.position += Camera.main.transform.forward * .1f;
+		if (Physics.Raycast(transform.position + Vector3.up * 2, Camera.main.transform.position - (transform.position + Vector3.up * 2), out hit, Mathf.Abs(_cameraPosition.z)))
+			Camera.main.transform.position = hit.point;
+
+		Debug.DrawLine(transform.position + Vector3.up * 2, Camera.main.transform.position);
+		Camera.main.transform.position += Camera.main.transform.forward * .5f;
+
+		DebugManager();
 	}
 
+	private void UpdateCamera()
+	{
+		//A Seperate Vector Is Used To Ensure That The Player Won't Be Able To Flip The Camera Upside Down
+		if (Mathf.Abs(_cameraDampedRotation.y) < _cameraMaxSpeed)
+			_cameraRotation += new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * _cameraSensitivity;
+		_cameraRotation = new Vector2(Mathf.Clamp(_cameraRotation.x, -30, 30), _cameraRotation.y);
+	}
+
+	//Returns The Direction Based Off The Camera Direction
+	private Vector3 GetDirection()
+	{
+		Vector3 direction = Camera.main.transform.TransformDirection(Vector3.right) * Input.GetAxisRaw("Horizontal") +
+			Camera.main.transform.TransformDirection(Vector3.forward) * Input.GetAxisRaw("Vertical");
+		direction = new Vector3(direction.x, 0, direction.z).normalized;
+
+		return direction;
+	}
+
+	//Gets The Closest Ray Position From Multiple Raycast Hits
 	private Vector3 GetClosestRayPoint(RaycastHit[] hits)
 	{
 		Vector3 closestRaycast = Vector3.zero;
 		float closestDistance = 0;
 
 		foreach (RaycastHit hit in hits)
-			if (Vector3.Distance(transform.position, hit.point) < closestDistance || closestDistance == 0)
+			if (closestDistance == 0 || Vector3.Distance(transform.position, hit.point) < closestDistance)
 			{
 				closestRaycast = hit.point;
 				closestDistance = Vector3.Distance(transform.position, hit.point);
 			}
 
 		return closestRaycast;
+	}
+
+	private void DebugManager()
+	{
+		if (Input.GetKeyDown("space") && _hasControl)
+		{
+			Debug.Log("Debug Dialogue Box");
+			GameManager.s_gameManager.ShowDialogue(_debugDialogue);
+		}
+	}
+
+	public void GiveControl()
+	{
+		Cursor.lockState = CursorLockMode.Locked;
+		_hasControl = true;
+	}
+
+	public void TakeControl()
+	{
+		Cursor.lockState = CursorLockMode.None;
+		_hasControl = false;
 	}
 }

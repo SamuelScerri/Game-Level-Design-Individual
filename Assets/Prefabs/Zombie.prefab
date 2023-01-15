@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2982395427504342446
+--- !u!1 &28121563695091583
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,25 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2461296892136726292}
-  - component: {fileID: 8415086606992065902}
-  - component: {fileID: 2982395427504342447}
-  - component: {fileID: 2982395427504342432}
-  - component: {fileID: 2982395427504342433}
-  m_Layer: 2
-  m_Name: Player
-  m_TagString: Player
+  - component: {fileID: 803954953791165893}
+  - component: {fileID: 6757673307763281855}
+  - component: {fileID: 6757673307763281852}
+  - component: {fileID: 6757673307763281853}
+  - component: {fileID: 6757673307763281850}
+  m_Layer: 0
+  m_Name: Zombie
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2461296892136726292
+--- !u!4 &803954953791165893
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982395427504342446}
+  m_GameObject: {fileID: 28121563695091583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,33 +35,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8415086606992065902
+--- !u!95 &6757673307763281855
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982395427504342446}
+  m_GameObject: {fileID: 28121563695091583}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9b3b516d3140f8240ae7b5909c090571, type: 3}
-  m_Controller: {fileID: 9100000, guid: c5f50cc8522a5b54eaa15ca129be0401, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 0
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!137 &2982395427504342447
+--- !u!137 &6757673307763281852
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982395427504342446}
+  m_GameObject: {fileID: 28121563695091583}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -75,7 +75,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: db7cffe1fc143d343b4c3e7779bfeec4, type: 2}
+  - {fileID: 2100000, guid: 2a962d2d52d2dc74c8e5223f9fb914b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,40 +108,39 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 2, z: 0}
     m_Extent: {x: 1, y: 2, z: 1}
   m_DirtyAABB: 0
---- !u!143 &2982395427504342432
-CharacterController:
+--- !u!136 &6757673307763281853
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982395427504342446}
+  m_GameObject: {fileID: 28121563695091583}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 4
   m_Radius: 1
-  m_SlopeLimit: 45
-  m_StepOffset: 0
-  m_SkinWidth: 0.0001
-  m_MinMoveDistance: 0
+  m_Height: 4
+  m_Direction: 1
   m_Center: {x: 0, y: 2, z: 0}
---- !u!114 &2982395427504342433
-MonoBehaviour:
+--- !u!195 &6757673307763281850
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2982395427504342446}
+  m_GameObject: {fileID: 28121563695091583}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8209d653f33933a42a5d5c1b549c8d00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cameraSensitivity: 1
-  _cameraMaxSpeed: 1000
-  _playerAcceleration: 0.2
-  _playerSpeed: 8
-  _cameraPosition: {x: 0, y: 3, z: -5}
-  _cameraPrefab: {fileID: 1774859105806649241, guid: 0183317cb4d2ea34f8aec6146b99b491, type: 3}
-  _hasControl: 1
+  m_AgentTypeID: 0
+  m_Radius: 1
+  m_Speed: 8
+  m_Acceleration: 4
+  avoidancePriority: 50
+  m_AngularSpeed: 90
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 4
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
