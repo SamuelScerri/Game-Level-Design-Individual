@@ -36,16 +36,25 @@ public class GameManager : MonoBehaviour
 	private void Update()
 	{
 		if (Input.GetKeyDown("p"))
-		{
-			_animator.SetTrigger("Toggle Pause Menu");
+			TogglePause();
+	}
 
-			_paused = _paused ? false : true;
-			Time.timeScale = _paused ? 0 : 1;
+	public void TogglePause()
+	{
+		_animator.SetTrigger("Toggle Pause Menu");
 
-			if (!_paused)
-				s_player.GiveControl();
-			else s_player.TakeControl();
-		}
+		_paused = _paused ? false : true;
+		Time.timeScale = _paused ? 0 : 1;
+
+		if (!_paused)
+			s_player.GiveControl();
+		else s_player.TakeControl();
+	}
+
+	public void QuitGame()
+	{
+		Debug.Log("Game Has Ended");
+		Application.Quit();
 	}
 
 	private IEnumerator DisplayTextCoroutine(Dialogue[] dialogue)
