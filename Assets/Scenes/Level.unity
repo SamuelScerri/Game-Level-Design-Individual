@@ -1464,10 +1464,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie
       objectReference: {fileID: 0}
-    - target: {fileID: 28121563695091583, guid: 2deb5334f54dfd24cbb74237c1443cc3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 803954953791165893, guid: 2deb5334f54dfd24cbb74237c1443cc3, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1609,18 +1605,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 2822984120129538500, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -612867305, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
-    - target: {fileID: 3289739228858286504, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -612867305, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
-    - target: {fileID: 7071785825049180772, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -612867305, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
+    - target: {fileID: 5854753245957238045, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
 --- !u!4 &3837416906526969868 stripped
