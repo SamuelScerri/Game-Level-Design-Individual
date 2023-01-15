@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
 	public static Player s_player;
 
 	private Animator _animator;
-
 	private GameObject _dialogueBox;
+
+	private bool _paused;
 
 	private void Awake()
 	{
@@ -30,6 +31,21 @@ public class GameManager : MonoBehaviour
 	{
 		_animator.SetTrigger("Toggle Dialogue Box");
 		StartCoroutine(DisplayTextCoroutine(dialogue));
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown("p"))
+		{
+			_animator.SetTrigger("Toggle Pause Menu");
+
+			_paused = _paused ? false : true;
+			Time.timeScale = _paused ? 0 : 1;
+
+			if (!_paused)
+				s_player.GiveControl();
+			else s_player.TakeControl();
+		}
 	}
 
 	private IEnumerator DisplayTextCoroutine(Dialogue[] dialogue)

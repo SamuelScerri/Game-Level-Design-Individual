@@ -167,6 +167,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Button
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 323
+        width: 190
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 256548801da645546b9036ac50da8e84
+      internalID: -211585936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -180,6 +201,7 @@ TextureImporter:
     nameFileIdTable:
       Dialogue Box: -612867305
       Cursor: -942799715
+      Button: -211585936
       Item Box: 1565564483
   spritePackingTag: 
   pSDRemoveMatte: 0
