@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 	private Animator _animator;
 	private AudioSource _source;
 
-	private Vector3 _playerVelocity, _playerDampedVelocity, _previousDirection;
+	private Vector3 _playerVelocity, _playerDampedVelocity, _previousDirection, _playerScaleDamped;
 
 	private float _playerRotation, _playerDampedRotation;
 
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		//Get The Character Controller & Animator
 		_characterController = GetComponent<CharacterController>();
-		_animator = GetComponent<Animator>();
+		_animator = transform.GetChild(0).GetComponent<Animator>();
 		_source = GetComponent<AudioSource>();
 
 		_previousControlState = true;
@@ -44,10 +44,7 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 direction = Vector3.zero;
 
 		if (HasControl())
-		{
 			direction = GetDirection();
-			CheckAttack();
-		}
 
 		//When The Player Is Moving, They Will Look Towards The Direction Vector
 		if (direction != Vector3.zero)
@@ -73,22 +70,8 @@ public class PlayerMovement : MonoBehaviour
 		_previousDirection = direction;
 	}
 
-	private void CheckAttack()
-	{
-		if (Input.GetMouseButtonDown(0) && _attackCoroutine == null)
-			_attackCoroutine = StartCoroutine(AttackCoroutine());
-	}
-
-	private IEnumerator AttackCoroutine()
-	{
-		_animator.SetTrigger("Attack");
-		yield return new WaitForSeconds(.1f);
-
-		_attackCoroutine = null;
-	}
-
 	//Returns The Direction Based Off The Camera Direction
-	private Vector3 GetDirection()
+	public Vector3 GetDirection()
 	{
 		Vector3 direction = Camera.main.transform.TransformDirection(Vector3.right) * Input.GetAxisRaw("Horizontal") +
 			Camera.main.transform.TransformDirection(Vector3.forward) * Input.GetAxisRaw("Vertical");
