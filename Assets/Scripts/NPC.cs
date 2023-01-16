@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
 	[SerializeField]
-	private Dialogue[] _dialogue;
+	private Dialogue _dialogue;
 
 	private float _originalRotation, _desiredRotation, _desiredDampedRotation;
 
