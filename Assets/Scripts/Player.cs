@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	[SerializeField]
-	private float _cameraSensitivity, _cameraMaxSpeed, _playerAcceleration, _playerSpeed;
+	private float _cameraSensitivity, _cameraMaxSpeed, _playerAcceleration, _playerSpeed, _footstepDelay;
 
 	[SerializeField]
 	private Vector3 _cameraPosition;
@@ -14,31 +14,36 @@ public class Player : MonoBehaviour
 	private GameObject _cameraPrefab;
 
 	[SerializeField]
+	private SoundVariety _footsteps;
+
+	[SerializeField]
 	private bool _hasControl;
 
-	private Dialogue[] _debugDialogue;
+	[SerializeField]
+	private byte _interactionRadius;
 
 	private CharacterController _characterController;
 	private Animator _animator;
+	private AudioSource _source;
 
 	private Vector2 _cameraRotation, _cameraDampedPosition, _cameraDampedRotation;
 	private Vector3 _playerVelocity, _playerDampedVelocity, _previousDirection;
 
 	private float _playerRotation, _playerDampedRotation;
 
+	private Coroutine _footstepCoroutine;
+	private GameObject _nearestNPC;
+
 	private void Start()
 	{
 		//Get The Character Controller & Animator
 		_characterController = GetComponent<CharacterController>();
 		_animator = GetComponent<Animator>();
+		_source = GetComponent<AudioSource>();
 
 		Instantiate(_cameraPrefab);
 		GameManager.s_player = this;
 		GiveControl();
-
-		_debugDialogue = new Dialogue[2];
-		_debugDialogue[0] = new Dialogue("This Is A Test");
-		_debugDialogue[1] = new Dialogue("This Is Another Text");
 	}
 
 	private void Update()
@@ -47,12 +52,18 @@ public class Player : MonoBehaviour
 		Vector3 direction = Vector3.zero;
 
 		if (_hasControl)
+		{
 			direction = GetDirection();
+			Interact();
+		}
 
 		//When The Player Is Moving, They Will Look Towards The Direction Vector
 		if (direction != Vector3.zero)
 		{
 			_playerRotation = Quaternion.LookRotation(direction, Vector2.up).eulerAngles.y;
+
+			if (_footstepCoroutine == null)
+				_footstepCoroutine = StartCoroutine(Footstep());
 			_animator.SetTrigger("Run");
 		}
 		else _animator.SetTrigger("Idle");
@@ -63,11 +74,14 @@ public class Player : MonoBehaviour
 
 		//The Velocity & Rotation Will Smoothly Change To The Desired Target
 		_playerVelocity = Vector3.SmoothDamp(_playerVelocity, direction * _playerSpeed, ref _playerDampedVelocity, _playerAcceleration);
-		transform.rotation = Quaternion.Euler(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, _playerRotation, ref _playerDampedRotation, .2f), 0);
+		transform.rotation = Quaternion.Euler(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, _playerRotation, ref _playerDampedRotation, .1f), 0);
 
 		//Finally The Character Controller Is Used To Move The Player
 		_characterController.Move(_playerVelocity * Time.deltaTime);
 		_previousDirection = direction;
+
+		//Here We Get The Nearest NPC So That The Player Can Interact With
+		_nearestNPC = GetNearestGameObject(GameObject.FindGameObjectsWithTag("NPC"));
 	}
 
 	private void LateUpdate()
@@ -92,8 +106,6 @@ public class Player : MonoBehaviour
 
 		Debug.DrawLine(transform.position + Vector3.up * 2, Camera.main.transform.position);
 		Camera.main.transform.position += Camera.main.transform.forward * .5f;
-
-		DebugManager();
 	}
 
 	private void UpdateCamera()
@@ -101,7 +113,7 @@ public class Player : MonoBehaviour
 		//A Seperate Vector Is Used To Ensure That The Player Won't Be Able To Flip The Camera Upside Down
 		if (Mathf.Abs(_cameraDampedRotation.y) < _cameraMaxSpeed)
 			_cameraRotation += new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * _cameraSensitivity;
-		_cameraRotation = new Vector2(Mathf.Clamp(_cameraRotation.x, -30, 30), _cameraRotation.y);
+		_cameraRotation = new Vector2(Mathf.Clamp(_cameraRotation.x, -15, 15), _cameraRotation.y);
 	}
 
 	//Returns The Direction Based Off The Camera Direction
@@ -114,6 +126,26 @@ public class Player : MonoBehaviour
 		return direction;
 	}
 
+	private IEnumerator Footstep()
+	{
+		_source.clip = _footsteps.GetRandomSoundVariation();
+		_source.Play();
+
+		yield return new WaitForSeconds(_footstepDelay);
+		_footstepCoroutine = null;
+	}
+
+	private void Interact()
+	{
+		if (Input.GetKeyDown("space") && _nearestNPC != null)
+		{
+			Vector3 lookPosition = _nearestNPC.transform.position - transform.position;
+			_playerRotation = Quaternion.LookRotation(lookPosition).eulerAngles.y;
+
+			_nearestNPC.GetComponent<NPC>().TalkTo(gameObject);
+		}
+	}
+
 	//Gets The Closest Ray Position From Multiple Raycast Hits
 	private Vector3 GetClosestRayPoint(RaycastHit[] hits)
 	{
@@ -121,22 +153,39 @@ public class Player : MonoBehaviour
 		float closestDistance = 0;
 
 		foreach (RaycastHit hit in hits)
-			if (closestDistance == 0 || Vector3.Distance(transform.position, hit.point) < closestDistance)
+		{
+			float distance = Vector3.Distance(transform.position, hit.point);
+
+			if (closestDistance == 0 || distance < closestDistance)
 			{
 				closestRaycast = hit.point;
-				closestDistance = Vector3.Distance(transform.position, hit.point);
+				closestDistance = distance;
 			}
+		}
+
 
 		return closestRaycast;
 	}
 
-	private void DebugManager()
+	private GameObject GetNearestGameObject(GameObject[] objects)
 	{
-		if (Input.GetKeyDown("space") && _hasControl)
+		GameObject closestGameObject = null;
+		float closestDistance = 0;
+
+		foreach (GameObject currentObject in objects)
 		{
-			Debug.Log("Debug Dialogue Box");
-			GameManager.s_gameManager.ShowDialogue(_debugDialogue);
+			float distance = Vector3.Distance(transform.position, currentObject.transform.position);
+
+			if (closestDistance == 0 || distance < closestDistance)
+				if (distance < _interactionRadius)
+				{
+					closestGameObject = currentObject;
+					closestDistance = distance;
+
+			}
 		}
+
+		return closestGameObject;
 	}
 
 	public void GiveControl()

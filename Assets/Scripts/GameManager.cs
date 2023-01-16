@@ -27,10 +27,10 @@ public class GameManager : MonoBehaviour
 		_dialogueBox = transform.GetChild(0).gameObject;
 	}
 
-	public void ShowDialogue(Dialogue[] dialogue)
+	public void ShowDialogue(Dialogue[] dialogue, NPC character)
 	{
 		_animator.SetTrigger("Toggle Dialogue Box");
-		StartCoroutine(DisplayTextCoroutine(dialogue));
+		StartCoroutine(DisplayTextCoroutine(dialogue, character));
 	}
 
 	private void Update()
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
 		Application.Quit();
 	}
 
-	private IEnumerator DisplayTextCoroutine(Dialogue[] dialogue)
+	private IEnumerator DisplayTextCoroutine(Dialogue[] dialogue, NPC character)
 	{
 		s_player.TakeControl();
 
@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		_animator.SetTrigger("Toggle Dialogue Box");
+		character.ResetRotation();
 		
 		yield return new WaitForSeconds(1);
 		s_player.GiveControl();
