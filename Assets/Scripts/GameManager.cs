@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager s_gameManager;
-	public static Player s_player;
+	public static PlayerMovement s_player;
 
 	private SaveManager _saveManager;
 
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 		_dialogueAudio = GetComponent<AudioSource>();
 
 		//Get The Dialogue Box & Create A New Save Manager
-		_dialogueBox = transform.GetChild(0).gameObject;
+		_dialogueBox = transform.GetChild(1).gameObject;
 		_saveManager = new SaveManager();
 
 		//This Will Load The Game
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 		if (uwr.result == UnityWebRequest.Result.ConnectionError)
 			Debug.Log("Error While Sending: " + uwr.error);
 		else
-			Debug.Log("Received: " + uwr.downloadHandler.text);
+			Debug.Log("Received: Data Successfully!");
 
 		_saveManager = JsonUtility.FromJson<SaveManager>(uwr.downloadHandler.text);
 
