@@ -15,4 +15,5 @@ MonoBehaviour:
   DialogueSections:
   - Speech: Hello There!
   - Speech: Welcome To Gridbox Town!
+  - Speech: It's Very Spooky As You Can Tell
   - Speech: Enjoy Your Stay!
