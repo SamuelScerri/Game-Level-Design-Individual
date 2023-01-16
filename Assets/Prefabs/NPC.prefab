@@ -134,6 +134,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbbc3c84ad68d614980416a4c84e749b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogue:
-  - Speech: Hello Stranger!
-  - Speech: Welcome To Our Town Called Gridbox Land!
+  _dialogue: {fileID: 11400000, guid: b5acadfd18976d04191d92fc2c7aa49e, type: 2}

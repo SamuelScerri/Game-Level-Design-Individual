@@ -192,16 +192,25 @@ public class Player : MonoBehaviour
 
 	public void GiveControl()
 	{
-		Cursor.lockState = CursorLockMode.Locked;
 		_hasControl = _previousControlState;
+
+		if (_hasControl)
+			Cursor.lockState = CursorLockMode.Locked;
 
 		_previousControlState = true;
 	}
 
 	public void TakeControl()
 	{
+		_playerDampedRotation = 0;
+
 		_previousControlState = _hasControl;
 		Cursor.lockState = CursorLockMode.None;
 		_hasControl = false;
+	}
+
+	public bool HasControl()
+	{
+		return _hasControl;
 	}
 }
