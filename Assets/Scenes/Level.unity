@@ -1986,7 +1986,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: ef2c0c1731e092d479d93ed5885a66d7, type: 2}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _talkAutomatically
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue.Array.size
@@ -4602,7 +4602,7 @@ PrefabInstance:
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: b9dc65d0f6354d143be5ddabcfc75c40, type: 2}
+      objectReference: {fileID: 11400000, guid: 3eee095680a01bd46a244564c595a6ea, type: 2}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue.Array.size
       value: 2
@@ -4719,10 +4719,6 @@ PrefabInstance:
     - target: {fileID: 2982395427504342446, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3439863654289612532, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}
-      propertyPath: _health
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}

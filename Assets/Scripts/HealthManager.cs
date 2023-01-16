@@ -63,6 +63,9 @@ public class HealthManager : MonoBehaviour
 		_material.color = Color.red;
 		_health --;
 
+		if (gameObject.tag == "Player")
+			GameManager.s_gameManager.SetHealth(_health);
+
 		if (_health == 0)
 			Die();
 

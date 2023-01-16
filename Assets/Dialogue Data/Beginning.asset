@@ -14,7 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DialogueSections:
   - Speech: Hello, Welcome To My Assignment!
+    Event:
+      Question: 0
+      Action:
+        m_PersistentCalls:
+          m_Calls: []
   - Speech: In Order To Move, Use The WASD Keys & Turn The Camera With The Mouse
+    Event:
+      Question: 0
+      Action:
+        m_PersistentCalls:
+          m_Calls: []
   - Speech: You Can Also Fight By Pressing The Left Mouse Button
+    Event:
+      Question: 0
+      Action:
+        m_PersistentCalls:
+          m_Calls: []
   - Speech: You Can Talk To Other People By Pressing The Spacebar Near Them
+    Event:
+      Question: 0
+      Action:
+        m_PersistentCalls:
+          m_Calls: []
   - Speech: I'm Sure They Can Also Help You Out
+    Event:
+      Question: 0
+      Action:
+        m_PersistentCalls:
+          m_Calls: []

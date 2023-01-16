@@ -25,11 +25,12 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField]
 	private bool _resetSave;
-
-	private bool _hasControl, _previousControlState;
+	private bool _hasControl;
 
 	[SerializeField]
 	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound;
+
+	private static Coroutine _textCoroutine;
 
 	private void Awake()
 	{
@@ -44,7 +45,6 @@ public class GameManager : MonoBehaviour
 		_animator = GetComponent<Animator>();
 		_dialogueAudio = GetComponent<AudioSource>();
 		_hasControl = true;
-		_previousControlState = true;
 
 		//Get The Dialogue Box & Create A New Save Manager
 		_dialogueBox = transform.GetChild(1).gameObject;
@@ -53,41 +53,36 @@ public class GameManager : MonoBehaviour
 
 		_saveManager = new SaveManager();
 
-		SetObjective("Proceed Through Level");
-
 		//This Will Load The Game
 		if (!_resetSave)
 			LoadGame();
 	}
 
-	public void SetHealthText(byte health)
-	{
-		_healthText.GetComponent<Text>().text = "Health: " + health.ToString();
-	}
-
 	public void SetObjective(string objective)
 	{
-		_objectiveText.GetComponent<Text>().text = "Current Objective: " + objective;
+		s_gameManager._objectiveText.GetComponent<Text>().text = "Current Objective: " + objective;
 	}
 
 	public void ShowDialogue(Dialogue dialogue, NPC character)
 	{
-		StartCoroutine(DisplayTextCoroutine(dialogue, character));
+		_textCoroutine = s_gameManager.StartCoroutine(s_gameManager.DisplayTextCoroutine(dialogue, character));
+	}
+
+	public void ContinueDialogue(Dialogue dialogue)
+	{
+		StopCoroutine(_textCoroutine);
+
+		_textCoroutine = s_gameManager.StartCoroutine(s_gameManager.DisplayTextCoroutine(dialogue, null));
 	}
 
 	public void GiveControl()
 	{
-		_hasControl = _previousControlState;
-
-		if (_hasControl)
-			Cursor.lockState = CursorLockMode.Locked;
-
-		_previousControlState = true;
+		_hasControl = true;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	public void TakeControl()
 	{
-		_previousControlState = _hasControl;
 		Cursor.lockState = CursorLockMode.None;
 		_hasControl = false;
 	}
@@ -99,7 +94,7 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown("p") && HasControl())
+		if (Input.GetKeyDown(KeyCode.Escape) && _textCoroutine == null)
 			TogglePause();
 	}
 
@@ -185,7 +180,8 @@ public class GameManager : MonoBehaviour
 		TakeControl();
 
 		//We Then Show The Dialogue Box
-		_animator.SetTrigger("Toggle Dialogue Box");
+		if (character != null)
+			_animator.SetTrigger("Toggle Dialogue Box");
 		_dialogueAudio.clip = _showDialogueSound;
 		_dialogueAudio.Play();
 
@@ -212,13 +208,29 @@ public class GameManager : MonoBehaviour
 				yield return new WaitForSeconds(_dialogueTextDelay);
 			}
 
-			//Stop Entire Coroutine Until The User Has Pressed The Space Button
-			yield return new WaitUntil(() => Input.GetKeyDown("space"));
+			//This Uses The Unity Event, Essentially Allowing Us To Be Able To Add Any Event We Want
+			if (section.Event.Question)
+			{
+				yield return new WaitUntil(() => Input.GetKeyDown("space"));
+				section.Event.Action.Invoke();
+			}
+
+			else
+			{
+				//Stop Entire Coroutine Until The User Has Pressed The Space Button
+				yield return new WaitUntil(() => Input.GetKeyDown("space"));
+				section.Event.Action.Invoke();
+
+				if (section.Event.Action.GetPersistentEventCount() > 0)
+					yield return new WaitForSeconds(1);
+			}
 		}
 
 		//Hide The Dialogue Box & Reset The Character Back To Its Original State
 		_animator.SetTrigger("Toggle Dialogue Box");
-		character.ResetRotation();
+
+		if (character != null)
+			character.ResetRotation();
 
 		_dialogueAudio.clip = _hideDialogueSound;
 		_dialogueAudio.Play();
@@ -229,5 +241,12 @@ public class GameManager : MonoBehaviour
 
 		//Clear Here, There Isn't Any Big Reason But It Could Free Up A Bit Of Memory
 		text.text = "";
+
+		_textCoroutine = null;
+	}
+
+	public void SetHealth(byte health)
+	{
+		_healthText.GetComponent<Text>().text = "Health: " + health.ToString();
 	}
 }
