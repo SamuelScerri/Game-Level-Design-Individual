@@ -22,7 +22,7 @@ public class Zombie : MonoBehaviour
 	private float _attackDelay;
 
 	[SerializeField]
-	private float _attackRadius;
+	private float _attackRadius, _chaseRadius;
 
 	private float _desiredRotation, _desiredDampedRotation;
 
@@ -30,17 +30,21 @@ public class Zombie : MonoBehaviour
 	private Animator _animator;
 
 	private Coroutine _attackCoroutine;
-	
+
 	private void Start()
 	{
 		_agent = GetComponent<NavMeshAgent>();
 		_animator = transform.GetChild(0).GetComponent<Animator>();
 
-		_animator.SetTrigger("Walk");
+		_animator.SetTrigger("Idle");
 	}
 
 	private void Update()
 	{
+		if (_currentState == State.Idling)
+			if (Vector3.Distance(transform.position, GameManager.s_player.transform.position) < _chaseRadius)
+				_currentState = State.Chasing;
+
 		if (_currentState == State.Chasing)
 		{
 			if (_agent.velocity.magnitude < .1f)

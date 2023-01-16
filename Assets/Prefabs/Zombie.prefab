@@ -85,10 +85,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02a88d9d2b9be9048b0e5166da4c561e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentState: 1
+  _currentState: 0
   _attackCooldown: 1
   _attackDelay: 0.5
   _attackRadius: 2
+  _chaseRadius: 16
 --- !u!114 &6202030032994357482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,5 +307,5 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: 2, z: 0}
-    m_Extent: {x: 1, y: 2, z: 1}
+    m_Extent: {x: 2, y: 2, z: 2}
   m_DirtyAABB: 0

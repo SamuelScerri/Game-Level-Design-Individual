@@ -7,6 +7,7 @@ public class PlayerInteractor : MonoBehaviour
 	[SerializeField]
 	private byte _interactionRadius;
 	private GameObject _nearestNPC;
+	private GameObject _nearestInteractable;
 
 	private void Update()
 	{
@@ -28,8 +29,17 @@ public class PlayerInteractor : MonoBehaviour
 			_nearestNPC.GetComponent<NPC>().TalkTo(gameObject);
 		}
 
+		else if (Input.GetKeyDown("space") && _nearestInteractable != null)
+		{
+			//The NPC Will Then Proceed To Talk To Us
+			_nearestInteractable.GetComponent<Animation>().Play();
+		}
+
 		//Here We Get The Nearest NPC So That The Player Can Interact With
 		_nearestNPC = GetNearestGameObject(GameObject.FindGameObjectsWithTag("NPC"));
+
+		//Here We Get The Nearest Interactable So That The Player Can Interact With
+		_nearestInteractable = GetNearestGameObject(GameObject.FindGameObjectsWithTag("Interactable"));
 	}
 
 	//This Function Will Get The Nearest Game Object That Is Closest To The Player

@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 	private float _dialogueTextDelay;
 
 	[SerializeField]
+	private bool _resetSave;
+
+	[SerializeField]
 	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound;
 
 	private void Awake()
@@ -42,7 +45,8 @@ public class GameManager : MonoBehaviour
 		_saveManager = new SaveManager();
 
 		//This Will Load The Game
-		LoadGame();
+		if (!_resetSave)
+			LoadGame();
 	}
 
 	public void ShowDialogue(Dialogue dialogue, NPC character)

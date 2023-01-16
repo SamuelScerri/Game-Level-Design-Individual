@@ -7,12 +7,18 @@ public class NPC : MonoBehaviour
 	[SerializeField]
 	private Dialogue _dialogue;
 
+	[SerializeField]
+	private bool _talkAutomatically;
+
 	private float _originalRotation, _desiredRotation, _desiredDampedRotation;
 
 	private void Start()
 	{
 		_originalRotation = transform.eulerAngles.y;
 		_desiredRotation = _originalRotation;
+
+		if (_talkAutomatically)
+			TalkTo(GameManager.s_player.gameObject);
 	}
 
 	public void TalkTo(GameObject character)

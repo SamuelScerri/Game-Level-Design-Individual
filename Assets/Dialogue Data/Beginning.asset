@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8927d5805069564d90790eb3eb8fa1a, type: 3}
-  m_Name: Tutorial
+  m_Name: Beginning
   m_EditorClassIdentifier: 
   DialogueSections:
-  - Speech: Press The Space Key To Interact With This Gate
-  - Speech: Try It Now!
-  - Speech: Don't Forget That You Can Fight With The Left Mouse Button
+  - Speech: Hello, Welcome To My Assignment!
+  - Speech: In Order To Move, Use The WASD Keys & Turn The Camera With The Mouse
+  - Speech: You Can Also Fight By Pressing The Left Mouse Button
+  - Speech: You Can Talk To Other People By Pressing The Spacebar Near Them
+  - Speech: I'm Sure They Can Also Help You Out
