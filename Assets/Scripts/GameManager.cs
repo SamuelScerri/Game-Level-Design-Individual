@@ -9,9 +9,13 @@ public class GameManager : MonoBehaviour
 	public static Player s_player;
 
 	private Animator _animator;
+	private AudioSource _dialogueAudio;
 	private GameObject _dialogueBox;
 
 	private bool _paused;
+
+	[SerializeField]
+	private float _dialogueTextDelay;
 
 	private void Awake()
 	{
@@ -24,6 +28,8 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 		_animator = GetComponent<Animator>();
+		_dialogueAudio = GetComponent<AudioSource>();
+
 		_dialogueBox = transform.GetChild(0).gameObject;
 	}
 
@@ -49,6 +55,8 @@ public class GameManager : MonoBehaviour
 		if (!_paused)
 			s_player.GiveControl();
 		else s_player.TakeControl();
+
+		
 	}
 
 	public void QuitGame()
@@ -71,7 +79,9 @@ public class GameManager : MonoBehaviour
 			for (int i = 0; i < dialogue[d].Speech.Length; i++)
 			{
 				text.text += dialogue[d].Speech[i];
-				yield return new WaitForSeconds(.02f);
+				_dialogueAudio.Play();
+
+				yield return new WaitForSeconds(_dialogueTextDelay);
 			}
 
 			//Stop Entire Coroutine Until The User Has Pressed The Space Button

@@ -154,6 +154,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ac0645e2bbdf89c429b0272cb6721c34, type: 3}
     - {fileID: 8300000, guid: 84843d3662fc65b4dac13ad3e71cba50, type: 3}
   _hasControl: 1
+  _interactionRadius: 3
 --- !u!82 &1759614107
 AudioSource:
   m_ObjectHideFlags: 0

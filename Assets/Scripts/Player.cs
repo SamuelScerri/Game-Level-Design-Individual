@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 	private SoundVariety _footsteps;
 
 	[SerializeField]
-	private bool _hasControl;
+	private bool _hasControl, _previousControlState;
 
 	[SerializeField]
 	private byte _interactionRadius;
@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 		_characterController = GetComponent<CharacterController>();
 		_animator = GetComponent<Animator>();
 		_source = GetComponent<AudioSource>();
+
+		_previousControlState = true;
 
 		Instantiate(_cameraPrefab);
 		GameManager.s_player = this;
@@ -191,11 +193,14 @@ public class Player : MonoBehaviour
 	public void GiveControl()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
-		_hasControl = true;
+		_hasControl = _previousControlState;
+
+		_previousControlState = true;
 	}
 
 	public void TakeControl()
 	{
+		_previousControlState = _hasControl;
 		Cursor.lockState = CursorLockMode.None;
 		_hasControl = false;
 	}
