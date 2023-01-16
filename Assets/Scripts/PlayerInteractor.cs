@@ -12,7 +12,7 @@ public class PlayerInteractor : MonoBehaviour
 	private void Update()
 	{
 		//We Will Only Be Able To Interact If The Player Has Control
-		if (GetComponent<PlayerMovement>().HasControl())
+		if (GameManager.s_gameManager.HasControl())
 			Interact();
 	}
 

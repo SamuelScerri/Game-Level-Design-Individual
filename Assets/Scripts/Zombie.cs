@@ -50,6 +50,7 @@ public class Zombie : MonoBehaviour
 			if (_agent.velocity.magnitude < .1f)
 				_animator.SetTrigger("Idle");
 			else _animator.SetTrigger("Walk");
+
 			_agent.SetDestination(GameManager.s_player.transform.position);
 		}
 

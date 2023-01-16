@@ -23,7 +23,7 @@ public class PlayerCamera : MonoBehaviour
 	private void LateUpdate()
 	{
 		//We Will Only Move The Camera If The Player Has Control
-		if (GetComponent<PlayerMovement>().HasControl())
+		if (GameManager.s_gameManager.HasControl())
 			UpdateCamera();
 
 		//This Is Responsible For Smoothly Rotating The Camera
@@ -37,7 +37,7 @@ public class PlayerCamera : MonoBehaviour
 
 		//This Will Ensure That The Camera Won't Be Behind An Object
 		RaycastHit hit;
-		
+
 		if (Physics.Raycast(transform.position + Vector3.up * 2, Camera.main.transform.position - (transform.position + Vector3.up * 2), out hit, Mathf.Abs(_cameraPosition.z)))
 			Camera.main.transform.position = hit.point;
 

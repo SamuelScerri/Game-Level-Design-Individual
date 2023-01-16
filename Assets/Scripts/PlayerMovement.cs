@@ -10,9 +10,6 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField]
 	private SoundVariety _footsteps;
 
-	[SerializeField]
-	private bool _hasControl, _previousControlState;
-
 	private CharacterController _characterController;
 	private Animator _animator;
 	private AudioSource _source;
@@ -31,11 +28,9 @@ public class PlayerMovement : MonoBehaviour
 		_animator = transform.GetChild(0).GetComponent<Animator>();
 		_source = GetComponents<AudioSource>()[2];
 
-		_previousControlState = true;
-
 		//Here We Will Set This Player As The Main Player, This Will Allow Us To Access The Player More Easily
-		GameManager.s_player = this;
-		GiveControl();
+		GameManager.s_player = gameObject;
+		GameManager.s_gameManager.GiveControl();
 	}
 
 	private void Update()
@@ -43,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 		//Get The Direction Vector For Adding Velocity Later
 		Vector3 direction = Vector3.zero;
 
-		if (HasControl())
+		if (GameManager.s_gameManager.HasControl())
 			direction = GetDirection();
 
 		//When The Player Is Moving, They Will Look Towards The Direction Vector
@@ -89,29 +84,7 @@ public class PlayerMovement : MonoBehaviour
 		_footstepCoroutine = null;
 	}
 
-	public void GiveControl()
-	{
-		_hasControl = _previousControlState;
 
-		if (_hasControl)
-			Cursor.lockState = CursorLockMode.Locked;
-
-		_previousControlState = true;
-	}
-
-	public void TakeControl()
-	{
-		_playerDampedRotation = 0;
-
-		_previousControlState = _hasControl;
-		Cursor.lockState = CursorLockMode.None;
-		_hasControl = false;
-	}
-
-	public bool HasControl()
-	{
-		return _hasControl;
-	}
 
 	public void SetPlayerRotation(float rotation)
 	{

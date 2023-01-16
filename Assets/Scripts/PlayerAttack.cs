@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
 		//Get The Direction Vector For Adding Velocity Later
 		Vector3 direction = Vector3.zero;
 
-		if (GetComponent<PlayerMovement>().HasControl())
+		if (GameManager.s_gameManager.HasControl())
 		{
 			direction = GetComponent<PlayerMovement>().GetDirection();
 			CheckAttack();

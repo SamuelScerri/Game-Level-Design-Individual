@@ -7,13 +7,15 @@ using UnityEngine.Networking;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager s_gameManager;
-	public static PlayerMovement s_player;
+	public static GameObject s_player;
 
 	private SaveManager _saveManager;
 
 	private Animator _animator;
 	private AudioSource _dialogueAudio;
 	private GameObject _dialogueBox;
+	private GameObject _objectiveText;
+	private GameObject _healthText;
 
 	private bool _paused;
 	private bool _requestDone;
@@ -23,6 +25,8 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField]
 	private bool _resetSave;
+
+	private bool _hasControl, _previousControlState;
 
 	[SerializeField]
 	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound;
@@ -39,14 +43,31 @@ public class GameManager : MonoBehaviour
 	{
 		_animator = GetComponent<Animator>();
 		_dialogueAudio = GetComponent<AudioSource>();
+		_hasControl = true;
+		_previousControlState = true;
 
 		//Get The Dialogue Box & Create A New Save Manager
 		_dialogueBox = transform.GetChild(1).gameObject;
+		_objectiveText = transform.GetChild(2).gameObject;
+		_healthText = transform.GetChild(3).gameObject;
+
 		_saveManager = new SaveManager();
+
+		SetObjective("Proceed Through Level");
 
 		//This Will Load The Game
 		if (!_resetSave)
 			LoadGame();
+	}
+
+	public void SetHealthText(byte health)
+	{
+		_healthText.GetComponent<Text>().text = "Health: " + health.ToString();
+	}
+
+	public void SetObjective(string objective)
+	{
+		_objectiveText.GetComponent<Text>().text = "Current Objective: " + objective;
 	}
 
 	public void ShowDialogue(Dialogue dialogue, NPC character)
@@ -54,9 +75,31 @@ public class GameManager : MonoBehaviour
 		StartCoroutine(DisplayTextCoroutine(dialogue, character));
 	}
 
+	public void GiveControl()
+	{
+		_hasControl = _previousControlState;
+
+		if (_hasControl)
+			Cursor.lockState = CursorLockMode.Locked;
+
+		_previousControlState = true;
+	}
+
+	public void TakeControl()
+	{
+		_previousControlState = _hasControl;
+		Cursor.lockState = CursorLockMode.None;
+		_hasControl = false;
+	}
+
+	public bool HasControl()
+	{
+		return _hasControl;
+	}
+
 	private void Update()
 	{
-		if (Input.GetKeyDown("p") && s_player.HasControl())
+		if (Input.GetKeyDown("p") && HasControl())
 			TogglePause();
 	}
 
@@ -69,8 +112,8 @@ public class GameManager : MonoBehaviour
 		Time.timeScale = _paused ? 0 : 1;
 
 		if (!_paused)
-			s_player.GiveControl();
-		else s_player.TakeControl();
+			GiveControl();
+		else TakeControl();
 	}
 
 	public void QuitGame()
@@ -139,7 +182,7 @@ public class GameManager : MonoBehaviour
 	private IEnumerator DisplayTextCoroutine(Dialogue dialogue, NPC character)
 	{
 		//First The Player Will Not Be Able To Move Anymore
-		s_player.TakeControl();
+		TakeControl();
 
 		//We Then Show The Dialogue Box
 		_animator.SetTrigger("Toggle Dialogue Box");
@@ -182,7 +225,7 @@ public class GameManager : MonoBehaviour
 		
 		//Finally The Player Will Be Able To Move Again
 		yield return new WaitForSeconds(1);
-		s_player.GiveControl();
+		GiveControl();
 
 		//Clear Here, There Isn't Any Big Reason But It Could Free Up A Bit Of Memory
 		text.text = "";

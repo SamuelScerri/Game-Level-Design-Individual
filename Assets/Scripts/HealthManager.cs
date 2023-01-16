@@ -41,10 +41,17 @@ public class HealthManager : MonoBehaviour
 
 	private void Die()
 	{
-		//Here We Will Basically Get Rid Of The Zombie AI
-		Destroy(GetComponent<MonoBehaviour>());
-		Destroy(GetComponent<Collider>());
 		_animator.SetTrigger("Die");
+
+		//Here We Will Basically Get Rid Of All The Logic
+		MonoBehaviour[] scripts = GetComponents<MonoBehaviour>();
+
+		foreach (MonoBehaviour script in scripts)
+			if (script != this)
+				Destroy(script);
+				
+		Destroy(GetComponent<Collider>());
+		
 	}
 
 	private IEnumerator HealthCoroutine()
@@ -62,5 +69,10 @@ public class HealthManager : MonoBehaviour
 		yield return new WaitForSeconds(_invisibilityTime);
 
 		_healthCoroutine = null;
+	}
+
+	public byte GetHealth()
+	{
+		return _health;
 	}
 }
