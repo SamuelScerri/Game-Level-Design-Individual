@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 	private bool _resetSave;
 	private bool _hasControl;
 
+	private NPC _currentCharacter;
+
 	[SerializeField]
 	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound;
 
@@ -181,7 +183,10 @@ public class GameManager : MonoBehaviour
 
 		//We Then Show The Dialogue Box
 		if (character != null)
+		{
+			_currentCharacter = character;
 			_animator.SetTrigger("Toggle Dialogue Box");
+		}
 		_dialogueAudio.clip = _showDialogueSound;
 		_dialogueAudio.Play();
 
@@ -229,8 +234,7 @@ public class GameManager : MonoBehaviour
 		//Hide The Dialogue Box & Reset The Character Back To Its Original State
 		_animator.SetTrigger("Toggle Dialogue Box");
 
-		if (character != null)
-			character.ResetRotation();
+		_currentCharacter.ResetRotation();
 
 		_dialogueAudio.clip = _hideDialogueSound;
 		_dialogueAudio.Play();
@@ -242,6 +246,7 @@ public class GameManager : MonoBehaviour
 		//Clear Here, There Isn't Any Big Reason But It Could Free Up A Bit Of Memory
 		text.text = "";
 
+		_currentCharacter = null;
 		_textCoroutine = null;
 	}
 

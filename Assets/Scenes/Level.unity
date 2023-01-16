@@ -4590,6 +4590,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4136322803147342724, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 104.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
 --- !u!1001 &2187182243757192026
