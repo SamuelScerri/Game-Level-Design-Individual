@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 		//Get The Character Controller & Animator
 		_characterController = GetComponent<CharacterController>();
 		_animator = transform.GetChild(0).GetComponent<Animator>();
-		_source = GetComponent<AudioSource>();
+		_source = GetComponents<AudioSource>()[2];
 
 		_previousControlState = true;
 

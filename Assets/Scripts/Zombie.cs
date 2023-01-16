@@ -30,7 +30,7 @@ public class Zombie : MonoBehaviour
 	private Animator _animator;
 
 	private Coroutine _attackCoroutine;
-
+	
 	private void Start()
 	{
 		_agent = GetComponent<NavMeshAgent>();
@@ -51,6 +51,8 @@ public class Zombie : MonoBehaviour
 
 		if (_currentState == State.Attacking)
 		{
+			_animator.SetTrigger("Idle");
+
 			Vector3 lookPosition = GameManager.s_player.transform.position - transform.position;
 			_desiredRotation = Quaternion.LookRotation(lookPosition).eulerAngles.y;
 
@@ -65,8 +67,8 @@ public class Zombie : MonoBehaviour
 	{
 		_currentState = State.Attacking;
 
-		_animator.SetTrigger("Attack");
 		_animator.SetTrigger("Idle");
+		_animator.SetTrigger("Attack");
 
 		_agent.ResetPath();
 

@@ -7,14 +7,20 @@ public class HealthManager : MonoBehaviour
 	[SerializeField]
 	private byte _health, _invisibilityTime;
 
+	[SerializeField]
+	private SoundVariety _impactSounds;
+
 	private Vector3 _scaleDamped, _colourDamped;
 	private Coroutine _healthCoroutine;
 	private Material _material;
-
+	private AudioSource _source;
+	private Animator _animator;
 
 	private void Start()
 	{
+		_source = GetComponent<AudioSource>();
 		_material = transform.GetChild(0).GetComponent<Renderer>().material;
+		_animator = transform.GetChild(0).GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -33,11 +39,25 @@ public class HealthManager : MonoBehaviour
 			_healthCoroutine = StartCoroutine(HealthCoroutine());
 	}
 
+	private void Die()
+	{
+		//Here We Will Basically Get Rid Of The Zombie AI
+		Destroy(GetComponent<MonoBehaviour>());
+		Destroy(GetComponent<Collider>());
+		_animator.SetTrigger("Die");
+	}
+
 	private IEnumerator HealthCoroutine()
 	{
+		_source.clip = _impactSounds.GetRandomSoundVariation();
+		_source.Play();
+
 		transform.GetChild(0).localScale = Vector3.one * 1.1f;
 		_material.color = Color.red;
 		_health --;
+
+		if (_health == 0)
+			Die();
 
 		yield return new WaitForSeconds(_invisibilityTime);
 
