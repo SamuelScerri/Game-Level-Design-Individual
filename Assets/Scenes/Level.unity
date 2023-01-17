@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18154581, g: 0.22718853, b: 0.30740678, a: 1}
+  m_IndirectSpecularColor: {r: 0.18154661, g: 0.2271898, b: 0.3074084, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8475,14 +8475,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2122466034927525804, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: _resetSave
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2122466034927525804, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: _equippedItems.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2122466034927525814, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
       propertyPath: m_Name
       value: Game Manager
@@ -8616,10 +8608,6 @@ PrefabInstance:
     - target: {fileID: 2982395427504342446, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4750417860106774114, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}
-      propertyPath: _cameraSensitivity
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}

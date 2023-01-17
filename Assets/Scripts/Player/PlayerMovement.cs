@@ -41,28 +41,31 @@ public class PlayerMovement : MonoBehaviour
 		if (GameManager.HasControl())
 			direction = GetDirection();
 
-		//When The Player Is Moving, They Will Look Towards The Direction Vector
-		if (direction != Vector3.zero)
+		if (Time.timeScale != 0)
 		{
-			_playerRotation = Quaternion.LookRotation(direction, Vector2.up).eulerAngles.y;
+			//When The Player Is Moving, They Will Look Towards The Direction Vector
+			if (direction != Vector3.zero)
+			{
+				_playerRotation = Quaternion.LookRotation(direction, Vector2.up).eulerAngles.y;
 
-			if (_footstepCoroutine == null)
-				_footstepCoroutine = StartCoroutine(FootstepCoroutine());
-			_animator.SetTrigger("Run");
+				if (_footstepCoroutine == null)
+					_footstepCoroutine = StartCoroutine(FootstepCoroutine());
+				_animator.SetTrigger("Run");
+			}
+			else _animator.SetTrigger("Idle");
+
+			//When The Player Stops Moving, The Desired Rotation Is Set To The Velocity, This Is To Prevent The Character From Turning in 90 Degree Angles
+			if (_previousDirection != Vector3.zero && direction == Vector3.zero)
+				_playerRotation = Quaternion.LookRotation(_playerVelocity, Vector2.up).eulerAngles.y;
+
+			//The Velocity & Rotation Will Smoothly Change To The Desired Target
+			_playerVelocity = Vector3.SmoothDamp(_playerVelocity, direction * _playerSpeed, ref _playerDampedVelocity, _playerAcceleration);
+			transform.eulerAngles = new Vector3(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, _playerRotation, ref _playerDampedRotation, .1f), 0);
+
+			//Finally The Character Controller Is Used To Move The Player
+			_characterController.Move(_playerVelocity * Time.deltaTime);
+			_previousDirection = direction;			
 		}
-		else _animator.SetTrigger("Idle");
-
-		//When The Player Stops Moving, The Desired Rotation Is Set To The Velocity, This Is To Prevent The Character From Turning in 90 Degree Angles
-		if (_previousDirection != Vector3.zero && direction == Vector3.zero)
-			_playerRotation = Quaternion.LookRotation(_playerVelocity, Vector2.up).eulerAngles.y;
-
-		//The Velocity & Rotation Will Smoothly Change To The Desired Target
-		_playerVelocity = Vector3.SmoothDamp(_playerVelocity, direction * _playerSpeed, ref _playerDampedVelocity, _playerAcceleration);
-		transform.rotation = Quaternion.Euler(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, _playerRotation, ref _playerDampedRotation, .1f), 0);
-
-		//Finally The Character Controller Is Used To Move The Player
-		_characterController.Move(_playerVelocity * Time.deltaTime);
-		_previousDirection = direction;
 	}
 
 	//Returns The Direction Based Off The Camera Direction

@@ -25,12 +25,15 @@ public class PlayerCamera : MonoBehaviour
 		//We Will Only Move The Camera If The Player Has Control
 		if (GameManager.HasControl())
 			UpdateCamera();
+	}
 
+	private void UpdateCamera()
+	{
 		//This Is Responsible For Smoothly Rotating The Camera
 		Camera.main.transform.rotation = Quaternion.Euler(
 			Mathf.SmoothDampAngle(Camera.main.transform.eulerAngles.x, _cameraRotation.x, ref _cameraDampedRotation.x, .1f),
 			Mathf.SmoothDampAngle(Camera.main.transform.eulerAngles.y, _cameraRotation.y, ref _cameraDampedRotation.y, .1f),
-		0);
+		1);
 
 		//This Will Ensure That The Camera Will Rotate Around The Player
 		Camera.main.transform.position = transform.position + Camera.main.transform.rotation * _cameraPosition;
@@ -43,10 +46,7 @@ public class PlayerCamera : MonoBehaviour
 
 		Debug.DrawLine(transform.position + Vector3.up * 2, Camera.main.transform.position);
 		Camera.main.transform.position += Camera.main.transform.forward * .5f;
-	}
 
-	private void UpdateCamera()
-	{
 		//A Seperate Vector Is Used To Ensure That The Player Won't Be Able To Flip The Camera Upside Down
 		if (Mathf.Abs(_cameraDampedRotation.y) < _cameraMaxSpeed)
 			_cameraRotation += new Vector2(Input.GetAxis("Mouse Y"), Input.GetAxis("Mouse X")) * _cameraSensitivity;

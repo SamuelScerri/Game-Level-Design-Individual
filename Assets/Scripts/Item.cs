@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.Networking;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Character/Create Item", order = 1)]
+[Serializable]
 public class Item : ScriptableObject
 {
 	public Sprite Image;

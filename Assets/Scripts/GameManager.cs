@@ -70,13 +70,10 @@ public class GameManager : MonoBehaviour
 		_inventoryItems = new GameObject[7];
 		_saveManager = new SaveManager();
 
-		UpdateInventory();
+		Debug.Log("Starting");
 
-		//This Will Load The Game
-		if (!_resetSave)
-			LoadGame();
-		else
-			ObtainCurrency(0);
+		UpdateInventory();
+		ObtainCurrency(0);
 
 		//Here We Update The Inventory
 		SetActiveItem(0);
@@ -266,6 +263,7 @@ public class GameManager : MonoBehaviour
 	//A Helper Function For Readability
 	public static void LoadGame()
 	{
+		Debug.Log("Loading Game");
 		s_gameManager.StartCoroutine(s_gameManager.GetRequest("samuelscerrig1.pythonanywhere.com/api/getdata"));
 	}
 
@@ -286,12 +284,18 @@ public class GameManager : MonoBehaviour
 		uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 		uwr.SetRequestHeader("Content-Type", "application/json");
 
+		uwr.disposeUploadHandlerOnDispose = true;
+		uwr.disposeDownloadHandlerOnDispose = true;
+
 		yield return uwr.SendWebRequest();
 
 		if (uwr.result == UnityWebRequest.Result.ConnectionError)
 			Debug.Log("Error While Sending: " + uwr.error);
 		else
 			Debug.Log("Received: " + uwr.downloadHandler.text);
+
+		//This Fixes The Memory Leak Error
+		uwr.Dispose();
 	}
 
 	/*
@@ -308,14 +312,13 @@ public class GameManager : MonoBehaviour
 		else
 			Debug.Log("Received: Data Successfully!");
 
+		//Here We Will Reset The Player's Position To The Previous State As Well As Any Items That They Have Gotten
 		_saveManager = JsonUtility.FromJson<SaveManager>(uwr.downloadHandler.text);
 
-		if (_saveManager.PlayerPosition != null)
-			s_player.transform.position = _saveManager.PlayerPosition;
+		s_player.transform.position = _saveManager.PlayerPosition;
+		s_gameManager._equippedItems = new List<Item>(_saveManager.PlayerInventory);
 
-		if (_saveManager.PlayerInventory != null)
-			s_gameManager._equippedItems = new List<Item>(_saveManager.PlayerInventory);
-
+		Time.timeScale = 0;
 		s_gameManager._currency = _saveManager.PlayerCurrency;
 		s_player.GetComponent<HealthManager>().SetHealth(_saveManager.PlayerHealth);
 
@@ -392,7 +395,7 @@ public class GameManager : MonoBehaviour
 				}
 			}
 
-							//Reset Behaviours
+			//Reset Behaviours
 			_yesPressed = false;
 			_noPressed = false;
 			_continueRequest = false;
@@ -416,6 +419,7 @@ public class GameManager : MonoBehaviour
 		_currentCharacter = null;
 		_textCoroutine = null;
 
+		//Just For Safety, In Case The User Pressed The Buttons During The Animation
 		_yesPressed = false;
 		_noPressed = false;
 		_continueRequest = false;
