@@ -264,6 +264,8 @@ public class GameManager : MonoBehaviour
 	public static void LoadGame()
 	{
 		Debug.Log("Loading Game");
+		TogglePause();
+
 		s_gameManager.StartCoroutine(s_gameManager.GetRequest("samuelscerrig1.pythonanywhere.com/api/getdata"));
 	}
 
@@ -304,6 +306,8 @@ public class GameManager : MonoBehaviour
 	*/
 	private IEnumerator GetRequest(string url)
 	{
+
+
 		UnityWebRequest uwr = UnityWebRequest.Get(url);
 		yield return uwr.SendWebRequest();
 
@@ -315,10 +319,9 @@ public class GameManager : MonoBehaviour
 		//Here We Will Reset The Player's Position To The Previous State As Well As Any Items That They Have Gotten
 		_saveManager = JsonUtility.FromJson<SaveManager>(uwr.downloadHandler.text);
 
-		s_player.transform.position = _saveManager.PlayerPosition;
+		s_player.GetComponent<PlayerMovement>().WarpPosition = _saveManager.PlayerPosition;
 		s_gameManager._equippedItems = new List<Item>(_saveManager.PlayerInventory);
 
-		Time.timeScale = 0;
 		s_gameManager._currency = _saveManager.PlayerCurrency;
 		s_player.GetComponent<HealthManager>().SetHealth(_saveManager.PlayerHealth);
 

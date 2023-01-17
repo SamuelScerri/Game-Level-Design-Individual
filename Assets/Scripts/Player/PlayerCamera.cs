@@ -26,23 +26,26 @@ public class PlayerCamera : MonoBehaviour
 		if (GameManager.HasControl())
 			UpdateCamera();
 
-		//This Is Responsible For Smoothly Rotating The Camera
-		Camera.main.transform.rotation = Quaternion.Euler(
+		if (Time.timeScale != 0)
+		{
+			//This Is Responsible For Smoothly Rotating The Camera
+			Camera.main.transform.rotation = Quaternion.Euler(
 			Mathf.SmoothDampAngle(Camera.main.transform.eulerAngles.x, _cameraRotation.x, ref _cameraDampedRotation.x, .1f),
 			Mathf.SmoothDampAngle(Camera.main.transform.eulerAngles.y, _cameraRotation.y, ref _cameraDampedRotation.y, .1f),
-		0);
+			0);
 
-		//This Will Ensure That The Camera Will Rotate Around The Player
-		Camera.main.transform.position = transform.position + Camera.main.transform.rotation * _cameraPosition;
+			//This Will Ensure That The Camera Will Rotate Around The Player
+			Camera.main.transform.position = transform.position + Camera.main.transform.rotation * _cameraPosition;
 
-		//This Will Ensure That The Camera Won't Be Behind An Object
-		RaycastHit hit;
+			//This Will Ensure That The Camera Won't Be Behind An Object
+			RaycastHit hit;
 
-		if (Physics.Raycast(transform.position + Vector3.up * 2, Camera.main.transform.position - (transform.position + Vector3.up * 2), out hit, Mathf.Abs(_cameraPosition.z)))
-			Camera.main.transform.position = hit.point;
+			if (Physics.Raycast(transform.position + Vector3.up * 2, Camera.main.transform.position - (transform.position + Vector3.up * 2), out hit, Mathf.Abs(_cameraPosition.z)))
+				Camera.main.transform.position = hit.point;
 
-		Debug.DrawLine(transform.position + Vector3.up * 2, Camera.main.transform.position);
-		Camera.main.transform.position += Camera.main.transform.forward * .5f;
+			Debug.DrawLine(transform.position + Vector3.up * 2, Camera.main.transform.position);
+			Camera.main.transform.position += Camera.main.transform.forward * .5f;		
+		}
 	}
 
 	private void UpdateCamera()

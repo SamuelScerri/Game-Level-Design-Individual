@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
 	private Coroutine _footstepCoroutine, _attackCoroutine;
 	private GameObject _nearestNPC;
 
+	public Vector3 WarpPosition;
+
 	private void Start()
 	{
 		//Get The Character Controller & Animator
@@ -35,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
+		_characterController.enabled = true;
+
 		//Get The Direction Vector For Adding Velocity Later
 		Vector3 direction = Vector3.zero;
 
@@ -64,7 +68,15 @@ public class PlayerMovement : MonoBehaviour
 
 			//Finally The Character Controller Is Used To Move The Player
 			_characterController.Move(_playerVelocity * Time.deltaTime);
-			_previousDirection = direction;			
+			_previousDirection = direction;	
+		}
+
+		if (WarpPosition != Vector3.zero)
+		{
+			_characterController.enabled = false;
+
+			transform.position = WarpPosition;
+			WarpPosition = Vector3.zero;
 		}
 	}
 
