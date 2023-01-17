@@ -46,6 +46,13 @@ public class HealthManager : MonoBehaviour
 		GameManager.s_gameManager.SetHealth(_health);
 	}
 
+	public void SetHealth(byte amount)
+	{
+		if (amount != 0)
+			_health = amount;
+		GameManager.s_gameManager.SetHealth(_health);
+	}
+
 	public void Damage(byte amount)
 	{
 		if (_healthCoroutine == null)

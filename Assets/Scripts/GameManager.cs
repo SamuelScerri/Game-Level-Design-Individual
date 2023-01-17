@@ -257,6 +257,7 @@ public class GameManager : MonoBehaviour
 		s_gameManager._saveManager.PlayerPosition = s_player.transform.position;
 		s_gameManager._saveManager.PlayerInventory = s_gameManager._equippedItems.ToArray();
 		s_gameManager._saveManager.PlayerCurrency = s_gameManager._currency;
+		s_gameManager._saveManager.PlayerHealth = s_player.GetComponent<HealthManager>().GetHealth();
 
 		string jsonData = JsonUtility.ToJson(s_gameManager._saveManager);
 		s_gameManager.StartCoroutine(s_gameManager.PostRequest("samuelscerrig1.pythonanywhere.com/api/savedata", jsonData));
@@ -309,7 +310,6 @@ public class GameManager : MonoBehaviour
 
 		_saveManager = JsonUtility.FromJson<SaveManager>(uwr.downloadHandler.text);
 
-	
 		if (_saveManager.PlayerPosition != null)
 			s_player.transform.position = _saveManager.PlayerPosition;
 
@@ -317,6 +317,7 @@ public class GameManager : MonoBehaviour
 			s_gameManager._equippedItems = new List<Item>(_saveManager.PlayerInventory);
 
 		s_gameManager._currency = _saveManager.PlayerCurrency;
+		s_player.GetComponent<HealthManager>().SetHealth(_saveManager.PlayerHealth);
 
 		ObtainCurrency(0);
 		UpdateCurrencyUI();

@@ -3933,7 +3933,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: ef2c0c1731e092d479d93ed5885a66d7, type: 2}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _talkAutomatically
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue.Array.size
@@ -8477,7 +8477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2122466034927525804, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
       propertyPath: _resetSave
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2122466034927525804, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
       propertyPath: _equippedItems.Array.size
