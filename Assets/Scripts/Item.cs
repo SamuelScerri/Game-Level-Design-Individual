@@ -9,11 +9,13 @@ public class Item : ScriptableObject
 
 	public bool IsWeapon;
 	public byte Strength;
+	public byte Value;
 
-	public Item(Sprite image, bool isWeapon, byte strength)
+	public Item(Sprite image, bool isWeapon, byte strength, byte newValue)
 	{
 		IsWeapon = isWeapon;
 		Strength = strength;
 		Image = image;
+		Value = newValue;
 	}
 }

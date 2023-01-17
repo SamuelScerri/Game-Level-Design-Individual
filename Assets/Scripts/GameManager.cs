@@ -39,7 +39,12 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private byte _currency;
 
+	[SerializeField]
+	private Dialogue _issueDialogue;
+
 	private NPC _currentCharacter;
+
+	private bool _yesPressed, _noPressed, _continueRequest;
 
 	[SerializeField]
 	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound, _collectSound;
@@ -102,6 +107,8 @@ public class GameManager : MonoBehaviour
 	{
 		s_gameManager._dialogueAudio.clip = s_gameManager._collectSound;
 		s_gameManager._dialogueAudio.Play();
+
+
 	}
 
 	public static void ObtainCurrency(byte amount)
@@ -110,6 +117,16 @@ public class GameManager : MonoBehaviour
 		CollectSound();
 
 		UpdateCurrencyUI();
+	}
+
+	public static void YesRequest()
+	{
+		s_gameManager._yesPressed = true;
+	}
+
+	public static void NoRequest()
+	{
+		s_gameManager._noPressed = true;
 	}
 
 	public static void SpendCurrency(byte amount)
@@ -129,7 +146,25 @@ public class GameManager : MonoBehaviour
 		if (s_gameManager._equippedItems.Count < s_gameManager._inventoryItems.Length)
 			s_gameManager._equippedItems.Add(item);
 
+		CollectSound();
+
+
 		UpdateInventory();
+	}
+
+	public static void SellItem(Item item)
+	{
+		if (s_gameManager._currency > item.Value && s_gameManager._equippedItems.Count < s_gameManager._inventoryItems.Length)
+		{
+			s_gameManager._currency -= item.Value;
+			s_gameManager._equippedItems.Add(item);
+			CollectSound();
+			UpdateInventory();
+			UpdateCurrencyUI();
+		}
+
+		else
+			ContinueDialogue(s_gameManager._issueDialogue);
 	}
 
 	public static Item GetActiveItem()
@@ -226,6 +261,11 @@ public class GameManager : MonoBehaviour
 		s_gameManager.StartCoroutine(s_gameManager.GetRequest("samuelscerrig1.pythonanywhere.com/api/getdata"));
 	}
 
+	public static void ContinueRequest()
+	{
+		s_gameManager._continueRequest = true;
+	}
+
 	/*
 		Code Adapted From:
 		http://syedakbar.co/connecting-unity-with-a-database-using-python-flask-rest-webservice/
@@ -306,19 +346,37 @@ public class GameManager : MonoBehaviour
 			//This Uses The Unity Event, Essentially Allowing Us To Be Able To Add Any Event We Want
 			if (section.Event.Question)
 			{
-				yield return new WaitUntil(() => Input.GetKeyDown("space"));
-				section.Event.Action.Invoke();
+				yield return new WaitUntil(() => _yesPressed || _noPressed);
+
+				if (_yesPressed)
+				{
+					section.Event.Action.Invoke();
+					//Reset Behaviours
+					_yesPressed = false;
+					_noPressed = false;
+
+					yield return new WaitForSeconds(1);
+					s_gameManager._dialogueAudio.clip = s_gameManager._textSound;
+				}
 			}
 
 			else
 			{
 				//Stop Entire Coroutine Until The User Has Pressed The Space Button
-				yield return new WaitUntil(() => Input.GetKeyDown("space"));
+				yield return new WaitUntil(() => Input.GetKeyDown("space") || _continueRequest);
 				section.Event.Action.Invoke();
 
 				if (section.Event.Action.GetPersistentEventCount() > 0)
+				{
 					yield return new WaitForSeconds(1);
+					s_gameManager._dialogueAudio.clip = s_gameManager._textSound;
+				}
 			}
+
+							//Reset Behaviours
+			_yesPressed = false;
+			_noPressed = false;
+			_continueRequest = false;
 		}
 
 		//Hide The Dialogue Box & Reset The Character Back To Its Original State
@@ -338,6 +396,10 @@ public class GameManager : MonoBehaviour
 
 		_currentCharacter = null;
 		_textCoroutine = null;
+
+		_yesPressed = false;
+		_noPressed = false;
+		_continueRequest = false;
 	}
 
 	public void SetHealth(byte health)
