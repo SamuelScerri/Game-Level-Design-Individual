@@ -28,9 +28,9 @@ public class PlayerInventory : MonoBehaviour
 		for (byte i = 0; i < _codes.Length; i++)
 			if (Input.GetKeyDown(_codes[i]))
 			{
-				GameManager.s_gameManager.SetActiveItem(i);
+				GameManager.SetActiveItem(i);
 
-				_equippedItemSprite.sprite = GameManager.s_gameManager.GetActiveItem().Image;
+				_equippedItemSprite.sprite = GameManager.GetActiveItem().Image;
 			}
 	}
 }

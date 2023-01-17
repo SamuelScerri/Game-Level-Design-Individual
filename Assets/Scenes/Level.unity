@@ -4502,14 +4502,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 529560778429577143, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 879312781148092494, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 2122466034927525802, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4594,33 +4586,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2122466034927525804, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
+      propertyPath: _equippedItems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2122466034927525814, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
       propertyPath: m_Name
       value: Game Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 2468290275024718078, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3101754559403389454, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6046929896172988368, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6637380439580136700, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 9091980136144251649, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 9091980136144251649, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 12.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}

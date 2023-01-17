@@ -24,7 +24,7 @@ public class NPC : MonoBehaviour
 
 	public void TalkTo(GameObject character)
 	{
-		GameManager.s_gameManager.ShowDialogue(_dialogue, this);
+		GameManager.ShowDialogue(_dialogue, this);
 		
 		Vector3 lookPosition = character.transform.position - transform.position;
 		_desiredRotation = Quaternion.LookRotation(lookPosition).eulerAngles.y;

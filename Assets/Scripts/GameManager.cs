@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 	private GameObject _dialogueBox, _objectiveText, _healthText, _inventory;
 
 	[SerializeField]
-	private Item[] _equippedItems;
+	private List<Item> _equippedItems;
 	private GameObject[] _inventoryItems;
 
 	private bool _paused;
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound;
 
-	private static Coroutine _textCoroutine;
+	private Coroutine _textCoroutine;
 
 	private byte _activeItem;
 
@@ -68,76 +68,83 @@ public class GameManager : MonoBehaviour
 			LoadGame();
 	}
 
-	private void UpdateInventory()
+	private static void UpdateInventory()
 	{
 		//Here We Will Get Every Item Box & Reset It For Later
-		for (byte i = 0; i < _inventory.transform.childCount; i ++)
+		for (byte i = 0; i < s_gameManager._inventory.transform.childCount; i ++)
 		{
-			_inventoryItems[i] = _inventory.transform.GetChild(i).gameObject;
+			s_gameManager._inventoryItems[i] = s_gameManager._inventory.transform.GetChild(i).gameObject;
 
 			//Here We Reset Every Item In The Inventory
-			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
-			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 0);
+			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
+			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 0);
 		}
 
 		//Here We Will Update The UI According To The Equipped Items In Order
-		for (byte i = 0; i < _equippedItems.Length; i++)
+		for (byte i = 0; i < s_gameManager._equippedItems.Count; i++)
 		{
-			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = _equippedItems[i].Image;
-			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
+			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = s_gameManager._equippedItems[i].Image;
+			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
 		}
 	}
 
-	public Item GetActiveItem()
+	public static void GiveItem(Item item)
 	{
-		return _equippedItems[_activeItem];
+		s_gameManager._equippedItems.Add(item);
+
+		UpdateInventory();
 	}
 
-	public void SetActiveItem(byte item)
+	public static Item GetActiveItem()
+	{
+		return s_gameManager._equippedItems[s_gameManager._activeItem];
+	}
+
+	public static void SetActiveItem(byte item)
 	{
 		//First We Clamp The Value To Avoid Any Errors
-		item = (byte) Mathf.Clamp(item, 0, _equippedItems.Length - 1);
+		item = (byte) Mathf.Clamp(item, 0, s_gameManager._equippedItems.Count - 1);
 
 		//Here We Will Reset The Colour Of The Previous Active Item's Box & Set The New Item Box
-		_inventoryItems[_activeItem].GetComponent<Image>().color = Color.white;
-		_inventoryItems[item].GetComponent<Image>().color = new Color(.8f, .8f, .8f);
+		s_gameManager._inventoryItems[s_gameManager._activeItem].GetComponent<Image>().color = Color.white;
+		s_gameManager._inventoryItems[item].GetComponent<Image>().color = new Color(.8f, .8f, .8f);
 
 		//Now We Just Change The Active Item
-		_activeItem = item;
+		s_gameManager._activeItem = item;
 	}
 
-	public void SetObjective(string objective)
+	public static void SetObjective(string objective)
 	{
 		s_gameManager._objectiveText.GetComponent<Text>().text = "Current Objective: " + objective;
 	}
 
-	public void ShowDialogue(Dialogue dialogue, NPC character)
+	public static void ShowDialogue(Dialogue dialogue, NPC character)
 	{
-		_textCoroutine = s_gameManager.StartCoroutine(s_gameManager.DisplayTextCoroutine(dialogue, character));
+		s_gameManager._textCoroutine = s_gameManager.StartCoroutine(s_gameManager.DisplayTextCoroutine(dialogue, character));
 	}
 
-	public void ContinueDialogue(Dialogue dialogue)
+	public static void ContinueDialogue(Dialogue dialogue)
 	{
-		StopCoroutine(_textCoroutine);
+		s_gameManager.StopCoroutine(s_gameManager._textCoroutine);
 
-		_textCoroutine = s_gameManager.StartCoroutine(s_gameManager.DisplayTextCoroutine(dialogue, null));
+		s_gameManager._textCoroutine = s_gameManager.StartCoroutine(s_gameManager.DisplayTextCoroutine(dialogue, null));
 	}
 
-	public void GiveControl()
+	public static void GiveControl()
 	{
-		_hasControl = true;
+		s_gameManager._hasControl = true;
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	public void TakeControl()
+	public static void TakeControl()
 	{
 		Cursor.lockState = CursorLockMode.None;
-		_hasControl = false;
+		s_gameManager._hasControl = false;
 	}
 
-	public bool HasControl()
+	public static bool HasControl()
 	{
-		return _hasControl;
+		return s_gameManager._hasControl;
 	}
 
 	private void Update()
@@ -147,39 +154,39 @@ public class GameManager : MonoBehaviour
 	}
 
 	//This Is Responsible For Pausing The Game, When The Game Is Paused The Player Won't Be Able To Control Their Character
-	public void TogglePause()
+	public static void TogglePause()
 	{
-		_animator.SetTrigger("Toggle Pause Menu");
+		s_gameManager._animator.SetTrigger("Toggle Pause Menu");
 
-		_paused = _paused ? false : true;
-		Time.timeScale = _paused ? 0 : 1;
+		s_gameManager._paused = s_gameManager._paused ? false : true;
+		Time.timeScale = s_gameManager._paused ? 0 : 1;
 
-		if (!_paused)
+		if (!s_gameManager._paused)
 			GiveControl();
 		else TakeControl();
 	}
 
-	public void QuitGame()
+	public static void QuitGame()
 	{
 		Debug.Log("Game Has Ended");
 		Application.Quit();
 	}
 
 	//This Will Save The Game By Converting The Save Manager Data To A Json File
-	public void SaveGame()
+	public static void SaveGame()
 	{
 		Debug.Log("Saving Data...");
 
-		_saveManager.PlayerPosition = s_player.transform.position;
+		s_gameManager._saveManager.PlayerPosition = s_player.transform.position;
 
-		string jsonData = JsonUtility.ToJson(_saveManager);
-		StartCoroutine(PostRequest("samuelscerrig1.pythonanywhere.com/api/savedata", jsonData));
+		string jsonData = JsonUtility.ToJson(s_gameManager._saveManager);
+		s_gameManager.StartCoroutine(s_gameManager.PostRequest("samuelscerrig1.pythonanywhere.com/api/savedata", jsonData));
 	}
 
 	//A Helper Function For Readability
-	public void LoadGame()
+	public static void LoadGame()
 	{
-		StartCoroutine(GetRequest("samuelscerrig1.pythonanywhere.com/api/getdata"));
+		s_gameManager.StartCoroutine(s_gameManager.GetRequest("samuelscerrig1.pythonanywhere.com/api/getdata"));
 	}
 
 	/*

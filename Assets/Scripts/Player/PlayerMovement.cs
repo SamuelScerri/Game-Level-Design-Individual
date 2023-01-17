@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
 		//Here We Will Set This Player As The Main Player, This Will Allow Us To Access The Player More Easily
 		GameManager.s_player = gameObject;
-		GameManager.s_gameManager.GiveControl();
+		GameManager.GiveControl();
 	}
 
 	private void Update()
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 		//Get The Direction Vector For Adding Velocity Later
 		Vector3 direction = Vector3.zero;
 
-		if (GameManager.s_gameManager.HasControl())
+		if (GameManager.HasControl())
 			direction = GetDirection();
 
 		//When The Player Is Moving, They Will Look Towards The Direction Vector

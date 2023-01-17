@@ -23,7 +23,7 @@ public class PlayerCamera : MonoBehaviour
 	private void LateUpdate()
 	{
 		//We Will Only Move The Camera If The Player Has Control
-		if (GameManager.s_gameManager.HasControl())
+		if (GameManager.HasControl())
 			UpdateCamera();
 
 		//This Is Responsible For Smoothly Rotating The Camera
