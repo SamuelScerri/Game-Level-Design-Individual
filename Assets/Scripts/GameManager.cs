@@ -90,7 +90,8 @@ public class GameManager : MonoBehaviour
 
 	public static void GiveItem(Item item)
 	{
-		s_gameManager._equippedItems.Add(item);
+		if (s_gameManager._equippedItems.Count < s_gameManager._inventoryItems.Length)
+			s_gameManager._equippedItems.Add(item);
 
 		UpdateInventory();
 	}
