@@ -68,19 +68,19 @@ public class GameManager : MonoBehaviour
 		_hasControl = true;
 
 		_inventoryItems = new GameObject[7];
-
-		ObtainCurrency(0);
-
-		//Here We Update The Inventory
-		UpdateInventory();
-		SetActiveItem(0);
-
 		_saveManager = new SaveManager();
 
+		UpdateInventory();
 
 		//This Will Load The Game
 		if (!_resetSave)
 			LoadGame();
+		else
+			ObtainCurrency(0);
+
+		//Here We Update The Inventory
+		SetActiveItem(0);
+		
 	}
 
 	private static void UpdateInventory()
@@ -107,8 +107,6 @@ public class GameManager : MonoBehaviour
 	{
 		s_gameManager._dialogueAudio.clip = s_gameManager._collectSound;
 		s_gameManager._dialogueAudio.Play();
-
-
 	}
 
 	public static void ObtainCurrency(byte amount)
@@ -257,6 +255,8 @@ public class GameManager : MonoBehaviour
 		Debug.Log("Saving Data...");
 
 		s_gameManager._saveManager.PlayerPosition = s_player.transform.position;
+		s_gameManager._saveManager.PlayerInventory = s_gameManager._equippedItems.ToArray();
+		s_gameManager._saveManager.PlayerCurrency = s_gameManager._currency;
 
 		string jsonData = JsonUtility.ToJson(s_gameManager._saveManager);
 		s_gameManager.StartCoroutine(s_gameManager.PostRequest("samuelscerrig1.pythonanywhere.com/api/savedata", jsonData));
@@ -309,7 +309,18 @@ public class GameManager : MonoBehaviour
 
 		_saveManager = JsonUtility.FromJson<SaveManager>(uwr.downloadHandler.text);
 
-		s_player.transform.position = _saveManager.PlayerPosition;
+	
+		if (_saveManager.PlayerPosition != null)
+			s_player.transform.position = _saveManager.PlayerPosition;
+
+		if (_saveManager.PlayerInventory != null)
+			s_gameManager._equippedItems = new List<Item>(_saveManager.PlayerInventory);
+
+		s_gameManager._currency = _saveManager.PlayerCurrency;
+
+		ObtainCurrency(0);
+		UpdateCurrencyUI();
+		UpdateInventory();
 	}
 
 	//This Will Process The Dialogue Object & Display In Sections

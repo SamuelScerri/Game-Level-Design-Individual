@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: -1349035820, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
   IsWeapon: 1
-  Strength: 0
+  Strength: 1
   Value: 1
