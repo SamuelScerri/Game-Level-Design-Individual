@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class HealthManager : MonoBehaviour
 {
@@ -58,6 +59,8 @@ public class HealthManager : MonoBehaviour
 				
 		Destroy(GetComponent<Collider>());
 		
+		if (gameObject.tag == "Enemy")
+			Destroy(GetComponent<NavMeshAgent>());
 	}
 
 	private IEnumerator HealthCoroutine()
