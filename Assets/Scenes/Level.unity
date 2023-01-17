@@ -5784,7 +5784,7 @@ PrefabInstance:
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 89da90db99f1d9f49972d1adfd114020, type: 2}
+      objectReference: {fileID: 11400000, guid: 84b3d7a0ca1b16c449394a95a83d422e, type: 2}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue.Array.size
       value: 1
@@ -8609,10 +8609,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3953768510613792535, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}
-      propertyPath: _consumeClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 8d869c1ce982645448d42e9a6ea86fc6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbfb6eeb7783c654ba98f48769dde81a, type: 3}
 --- !u!1001 &8378583277798184116

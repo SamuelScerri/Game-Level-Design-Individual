@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85248b4bdef70d0468595c609ced3169, type: 3}
-  m_Name: Basic Potion
+  m_Name: Advanced Health Potion
   m_EditorClassIdentifier: 
-  Image: {fileID: -942799715, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
+  Image: {fileID: 21300000, guid: 76b3887a70d95124581d5828d08a49a6, type: 3}
   IsWeapon: 0
-  Strength: 10
-  Value: 0
+  Strength: 20
+  Value: 20

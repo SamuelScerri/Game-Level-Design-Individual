@@ -235,6 +235,7 @@ MonoBehaviour:
   _impactSounds:
     Clips:
     - {fileID: 8300000, guid: 59e51e69e6be6d0468e7cc58eda2b7dc, type: 3}
+  _droppableObjects: []
 --- !u!114 &3953768510613792535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2926ef77efd724a98505d5132bf001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _consumeClip: {fileID: 8300000, guid: 8d869c1ce982645448d42e9a6ea86fc6, type: 3}
 --- !u!114 &4413930745610772491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,7 +572,7 @@ Transform:
   m_GameObject: {fileID: 3749658708805632543}
   m_LocalRotation: {x: -0.099045746, y: -0.23911758, z: -0.89239913, w: 0.3696438}
   m_LocalPosition: {x: 0.25, y: 0.125, z: -0.125}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6107743076603953919}
@@ -621,8 +623,8 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_DrawMode: 1
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

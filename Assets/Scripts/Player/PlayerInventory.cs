@@ -26,6 +26,8 @@ public class PlayerInventory : MonoBehaviour
 	{
 		_equippedItemSprite = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
 		_source = GetComponents<AudioSource>()[1];
+
+		_equippedItemSprite.sprite = GameManager.GetActiveItem().Image;
 	}
 
 	private void Update()
@@ -49,7 +51,7 @@ public class PlayerInventory : MonoBehaviour
 				_source.Play();
 			}
 
-			else GetComponent<PlayerAttack>().CheckAttack();
+			else GetComponent<PlayerAttack>().CheckAttack(GameManager.GetActiveItem().Strength);
 		}
 	}
 }

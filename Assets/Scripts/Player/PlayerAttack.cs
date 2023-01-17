@@ -24,13 +24,13 @@ public class PlayerAttack : MonoBehaviour
 		_source = GetComponents<AudioSource>()[1];
 	}
 
-	public void CheckAttack()
+	public void CheckAttack(byte amount)
 	{
 		if (Input.GetMouseButtonDown(0) && _attackCoroutine == null)
-			_attackCoroutine = StartCoroutine(AttackCoroutine());
+			_attackCoroutine = StartCoroutine(AttackCoroutine(amount));
 	}
 
-	private IEnumerator AttackCoroutine()
+	private IEnumerator AttackCoroutine(byte amount)
 	{
 		_animator.SetTrigger("Attack");
 		_source.clip = _attackSounds.GetRandomSoundVariation();
@@ -43,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
 		//The Enemy's Collider Is Really Thin, So A Sphere Cast Should Help The Player Damage The Zombies Easier
 		if (Physics.SphereCast(transform.position + Vector3.up * 2, 1, transform.forward, out hit, _attackRadius))
 			if (hit.collider.tag == "Enemy")
-				hit.transform.GetComponent<HealthManager>().Damage();
+				hit.transform.GetComponent<HealthManager>().Damage(amount);
 
 		yield return new WaitForSeconds(_attackCooldown);
 

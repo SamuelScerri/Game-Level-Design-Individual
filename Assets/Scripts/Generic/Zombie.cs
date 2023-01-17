@@ -83,7 +83,7 @@ public class Zombie : MonoBehaviour
 
 		//Check If The Player Is Still Within Reach
 		if (Vector3.Distance(transform.position, GameManager.s_player.transform.position) < _attackRadius)
-			GameManager.s_player.GetComponent<HealthManager>().Damage();
+			GameManager.s_player.GetComponent<HealthManager>().Damage(1);
 
 		_animator.SetTrigger("Walk");
 		_currentState = State.Chasing;

@@ -1313,7 +1313,11 @@ MonoBehaviour:
   _currencyText: {fileID: 1318244997}
   _inventory: {fileID: 2120870536}
   _equippedItems:
-  - {fileID: 11400000, guid: 40517981dff6bf649bead0ef07056b74, type: 2}
+  - {fileID: 11400000, guid: cc9cd2ccc3d6ba84ea4a324807f1fc94, type: 2}
+  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
+  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
+  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
+  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
   - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
   _dialogueTextDelay: 0.04
   _resetSave: 0
@@ -1532,7 +1536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2122466035988487819
 RectTransform:
   m_ObjectHideFlags: 0

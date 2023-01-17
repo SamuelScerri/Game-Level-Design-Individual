@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85248b4bdef70d0468595c609ced3169, type: 3}
-  m_Name: Basic Weapon
+  m_Name: Advanced Weapon
   m_EditorClassIdentifier: 
-  Image: {fileID: -1349035820, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
+  Image: {fileID: 813408200, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
   IsWeapon: 1
-  Strength: 0
-  Value: 1
+  Strength: 2
+  Value: 50

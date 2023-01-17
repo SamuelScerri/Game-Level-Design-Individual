@@ -46,10 +46,10 @@ public class HealthManager : MonoBehaviour
 		GameManager.s_gameManager.SetHealth(_health);
 	}
 
-	public void Damage()
+	public void Damage(byte amount)
 	{
 		if (_healthCoroutine == null)
-			_healthCoroutine = StartCoroutine(HealthCoroutine());
+			_healthCoroutine = StartCoroutine(HealthCoroutine(amount));
 	}
 
 	private void Die()
@@ -69,7 +69,7 @@ public class HealthManager : MonoBehaviour
 			Destroy(GetComponent<NavMeshAgent>());
 	}
 
-	private IEnumerator HealthCoroutine()
+	private IEnumerator HealthCoroutine(byte amount)
 	{
 		_source.clip = _impactSounds.GetRandomSoundVariation();
 		_source.Play();
@@ -77,7 +77,7 @@ public class HealthManager : MonoBehaviour
 		transform.GetChild(0).localScale = Vector3.one * 1.1f;
 		_material.color = Color.red;
 
-		_health = (byte) Mathf.Clamp(_health - 1, 0, 255);
+		_health = (byte) Mathf.Clamp(_health - amount, 0, 255);
 
 		if (gameObject.tag == "Player")
 			GameManager.s_gameManager.SetHealth(_health);

@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
 	public static void SellItem(Item item)
 	{
-		if (s_gameManager._currency > item.Value && s_gameManager._equippedItems.Count < s_gameManager._inventoryItems.Length)
+		if (s_gameManager._currency >= item.Value && s_gameManager._equippedItems.Count < s_gameManager._inventoryItems.Length)
 		{
 			s_gameManager._currency -= item.Value;
 			s_gameManager._equippedItems.Add(item);
