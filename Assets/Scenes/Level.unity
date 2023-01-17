@@ -3930,10 +3930,10 @@ PrefabInstance:
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue
       value: 
-      objectReference: {fileID: 11400000, guid: 14686060b2f7ff845b22108e47e3f37a, type: 2}
+      objectReference: {fileID: 11400000, guid: ef2c0c1731e092d479d93ed5885a66d7, type: 2}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _talkAutomatically
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue.Array.size
