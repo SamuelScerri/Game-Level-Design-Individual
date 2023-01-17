@@ -35,6 +35,7 @@ public class PlayerInteractor : MonoBehaviour
 			_nearestInteractable.GetComponent<Animation>().Play();
 		}
 
+
 		//Here We Get The Nearest NPC So That The Player Can Interact With
 		_nearestNPC = GetNearestGameObject(GameObject.FindGameObjectsWithTag("NPC"));
 

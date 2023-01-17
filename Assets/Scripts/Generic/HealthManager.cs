@@ -40,6 +40,12 @@ public class HealthManager : MonoBehaviour
 			Mathf.SmoothDamp(_material.color.b, 1, ref _colourDamped.z, .1f));
 	}
 
+	public void GainHealth(byte amount)
+	{
+		_health = (byte) Mathf.Clamp(_health + amount, 0, 255);
+		GameManager.s_gameManager.SetHealth(_health);
+	}
+
 	public void Damage()
 	{
 		if (_healthCoroutine == null)
@@ -71,7 +77,7 @@ public class HealthManager : MonoBehaviour
 		transform.GetChild(0).localScale = Vector3.one * 1.1f;
 		_material.color = Color.red;
 
-		_health = (byte) Mathf.Clamp(_health - 1, 0, Mathf.Infinity);
+		_health = (byte) Mathf.Clamp(_health - 1, 0, 255);
 
 		if (gameObject.tag == "Player")
 			GameManager.s_gameManager.SetHealth(_health);

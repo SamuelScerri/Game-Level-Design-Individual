@@ -1314,8 +1314,9 @@ MonoBehaviour:
   _inventory: {fileID: 2120870536}
   _equippedItems:
   - {fileID: 11400000, guid: 40517981dff6bf649bead0ef07056b74, type: 2}
+  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
   _dialogueTextDelay: 0.04
-  _resetSave: 1
+  _resetSave: 0
   _currency: 0
   _issueDialogue: {fileID: 11400000, guid: 1ccbf69b684429a479edd4c9e157e877, type: 2}
   _showDialogueSound: {fileID: 8300000, guid: 50d851bba1b3d834d96df4a5a2b7e511, type: 3}

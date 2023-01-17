@@ -24,19 +24,7 @@ public class PlayerAttack : MonoBehaviour
 		_source = GetComponents<AudioSource>()[1];
 	}
 
-	private void Update()
-	{
-		//Get The Direction Vector For Adding Velocity Later
-		Vector3 direction = Vector3.zero;
-
-		if (GameManager.HasControl())
-		{
-			direction = GetComponent<PlayerMovement>().GetDirection();
-			CheckAttack();
-		}
-	}
-
-	private void CheckAttack()
+	public void CheckAttack()
 	{
 		if (Input.GetMouseButtonDown(0) && _attackCoroutine == null)
 			_attackCoroutine = StartCoroutine(AttackCoroutine());

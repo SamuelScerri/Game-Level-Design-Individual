@@ -172,6 +172,13 @@ public class GameManager : MonoBehaviour
 		return s_gameManager._equippedItems[s_gameManager._activeItem];
 	}
 
+	public static void RemoveActiveItem()
+	{
+		s_gameManager._equippedItems.RemoveAt(s_gameManager._activeItem);
+		SetActiveItem(s_gameManager._activeItem);
+		UpdateInventory();
+	}
+
 	public static void SetActiveItem(byte item)
 	{
 		//First We Clamp The Value To Avoid Any Errors
