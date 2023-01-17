@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
+/*
+	This Is The Game Manager, To Be Honest This Could Have Been Seperated Into Multiple Classes Like The Player,
+	But It Has Became A Bit Unmaintanable & Seperating Would Be A Waste Of Time
+*/
+
 public class GameManager : MonoBehaviour
 {
 	public static GameManager s_gameManager;
@@ -15,7 +20,7 @@ public class GameManager : MonoBehaviour
 	private AudioSource _dialogueAudio;
 
 	[SerializeField]
-	private GameObject _dialogueBox, _objectiveText, _healthText, _inventory;
+	private GameObject _dialogueBox, _objectiveText, _healthText, _currencyText, _inventory;
 
 	[SerializeField]
 	private List<Item> _equippedItems;
@@ -31,10 +36,13 @@ public class GameManager : MonoBehaviour
 	private bool _resetSave;
 	private bool _hasControl;
 
+	[SerializeField]
+	private byte _currency;
+
 	private NPC _currentCharacter;
 
 	[SerializeField]
-	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound;
+	private AudioClip _showDialogueSound, _hideDialogueSound, _textSound, _collectSound;
 
 	private Coroutine _textCoroutine;
 
@@ -55,6 +63,8 @@ public class GameManager : MonoBehaviour
 		_hasControl = true;
 
 		_inventoryItems = new GameObject[7];
+
+		ObtainCurrency(0);
 
 		//Here We Update The Inventory
 		UpdateInventory();
@@ -86,6 +96,32 @@ public class GameManager : MonoBehaviour
 			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = s_gameManager._equippedItems[i].Image;
 			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
 		}
+	}
+
+	public static void CollectSound()
+	{
+		s_gameManager._dialogueAudio.clip = s_gameManager._collectSound;
+		s_gameManager._dialogueAudio.Play();
+	}
+
+	public static void ObtainCurrency(byte amount)
+	{
+		s_gameManager._currency += amount;
+		CollectSound();
+
+		UpdateCurrencyUI();
+	}
+
+	public static void SpendCurrency(byte amount)
+	{
+		if (s_gameManager._currency < amount)
+			Debug.Log("Too Poor!");
+		else s_gameManager._currency -= amount;
+	}
+
+	private static void UpdateCurrencyUI()
+	{
+		s_gameManager._currencyText.GetComponent<Text>().text = "Currency: " + s_gameManager._currency;
 	}
 
 	public static void GiveItem(Item item)

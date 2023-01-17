@@ -126,13 +126,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cursor
+      name: Hand
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 30
-        height: 36
+        x: 30
+        y: 1
+        width: 29
+        height: 35
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,6 +209,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Coin
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 401
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c95edba048ee574aa4aa2ccabd80ed9
+      internalID: 1893964683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -221,9 +242,10 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Dialogue Box: -612867305
-      Cursor: -942799715
       Sword: 813408200
+      Coin: 1893964683
       Button: -211585936
+      Hand: -942799715
       Item Box: 1565564483
   spritePackingTag: 
   pSDRemoveMatte: 0

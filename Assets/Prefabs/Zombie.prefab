@@ -107,6 +107,9 @@ MonoBehaviour:
   _impactSounds:
     Clips:
     - {fileID: 8300000, guid: 59e51e69e6be6d0468e7cc58eda2b7dc, type: 3}
+  _droppableObjects:
+  - {fileID: 6223101192748468882, guid: d841e0bcd7e1d9d489ea2e7369cc7c8d, type: 3}
+  - {fileID: 6223101192748468882, guid: a4c3e0d9d4afadf4fb7e01c17110725c, type: 3}
 --- !u!82 &1640545291
 AudioSource:
   m_ObjectHideFlags: 0

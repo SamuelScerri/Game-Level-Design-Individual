@@ -39,6 +39,8 @@ public class Zombie : MonoBehaviour
 		_animator.SetTrigger("Idle");
 	}
 
+
+
 	private void Update()
 	{
 		if (_currentState == State.Idling)

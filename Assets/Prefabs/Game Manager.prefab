@@ -1,5 +1,85 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1318244997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1318244998}
+  - component: {fileID: 1318245000}
+  - component: {fileID: 1318244999}
+  m_Layer: 5
+  m_Name: Currency
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1318244998
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318244997}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2122466034927525802}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 4, y: -9}
+  m_SizeDelta: {x: 47.5, y: 5}
+  m_Pivot: {x: 0, y: 1}
+--- !u!222 &1318245000
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318244997}
+  m_CullTransparentMesh: 1
+--- !u!114 &1318244999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318244997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: ad00335d6924a3e4eaa45e1aab11b85a, type: 3}
+    m_FontSize: 4
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 65
+    m_Alignment: 0
+    m_AlignByGeometry: 1
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Currency:'
 --- !u!1 &2120870536
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +533,7 @@ RectTransform:
   - {fileID: 798500207229967227}
   - {fileID: 4400910169167024229}
   m_Father: {fileID: 2122466034927525802}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -690,6 +770,7 @@ RectTransform:
   - {fileID: 2122466035988487819}
   - {fileID: 4136322803147342724}
   - {fileID: 5143971447982085346}
+  - {fileID: 1318244998}
   - {fileID: 7290243070731343362}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -830,15 +911,17 @@ MonoBehaviour:
   _dialogueBox: {fileID: 2122466035988487818}
   _objectiveText: {fileID: 9057474454409002550}
   _healthText: {fileID: 6933924418929056000}
+  _currencyText: {fileID: 1318244997}
   _inventory: {fileID: 2120870536}
   _equippedItems:
   - {fileID: 11400000, guid: 40517981dff6bf649bead0ef07056b74, type: 2}
-  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
   _dialogueTextDelay: 0.04
   _resetSave: 1
+  _currency: 0
   _showDialogueSound: {fileID: 8300000, guid: 50d851bba1b3d834d96df4a5a2b7e511, type: 3}
   _hideDialogueSound: {fileID: 8300000, guid: 0a25b5e1a13119e48a30ac45cd5ef4ad, type: 3}
   _textSound: {fileID: 8300000, guid: a5cad7692ccf96f4890cfb8e737dab0e, type: 3}
+  _collectSound: {fileID: 8300000, guid: b31e43c5b615ffa49b34f12d86c132ff, type: 3}
 --- !u!82 &278035075
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2045,8 +2128,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 4, y: -4.046356}
-  m_SizeDelta: {x: 47.5, y: 11.5}
+  m_AnchoredPosition: {x: 4, y: -4}
+  m_SizeDelta: {x: 47.5, y: 5}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1931622059776519687
 CanvasRenderer:
@@ -2089,7 +2172,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Health
+  m_Text: 'Health:'
 --- !u!1 &7024499757348939453
 GameObject:
   m_ObjectHideFlags: 0

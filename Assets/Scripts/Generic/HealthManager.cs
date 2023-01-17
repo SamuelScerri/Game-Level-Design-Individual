@@ -10,6 +10,9 @@ public class HealthManager : MonoBehaviour
 	[SerializeField]
 	private SoundVariety _impactSounds;
 
+	[SerializeField]
+	private GameObject[] _droppableObjects;
+
 	private Vector3 _scaleDamped, _colourDamped;
 	private Coroutine _healthCoroutine;
 	private Material _material;
@@ -64,17 +67,30 @@ public class HealthManager : MonoBehaviour
 
 		transform.GetChild(0).localScale = Vector3.one * 1.1f;
 		_material.color = Color.red;
-		_health --;
+
+		_health = (byte) Mathf.Clamp(_health - 1, 0, Mathf.Infinity);
 
 		if (gameObject.tag == "Player")
 			GameManager.s_gameManager.SetHealth(_health);
 
 		if (_health == 0)
+		{
 			Die();
+
+			yield return new WaitForSeconds(1);
+
+			if (_droppableObjects.Length > 0)
+				DropItem();
+		}
 
 		yield return new WaitForSeconds(_invisibilityTime);
 
 		_healthCoroutine = null;
+	}
+
+	private void DropItem()
+	{
+		Instantiate(_droppableObjects[Random.Range(0, _droppableObjects.Length)], transform.position + Vector3.up * 2, Quaternion.identity);
 	}
 
 	public byte GetHealth()
