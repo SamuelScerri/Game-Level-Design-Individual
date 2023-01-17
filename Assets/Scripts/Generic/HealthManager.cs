@@ -21,6 +21,9 @@ public class HealthManager : MonoBehaviour
 		_source = GetComponent<AudioSource>();
 		_material = transform.GetChild(0).GetComponent<Renderer>().material;
 		_animator = transform.GetChild(0).GetComponent<Animator>();
+
+		if (gameObject.tag == "Player")
+			GameManager.s_gameManager.SetHealth(_health);
 	}
 
 	// Update is called once per frame

@@ -1986,7 +1986,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: ef2c0c1731e092d479d93ed5885a66d7, type: 2}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _talkAutomatically
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2739536550272278569, guid: 8d7b1b5d8bd88af49b057acfc137cbf8, type: 3}
       propertyPath: _dialogue.Array.size
@@ -4589,10 +4589,6 @@ PrefabInstance:
     - target: {fileID: 2122466034927525814, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
       propertyPath: m_Name
       value: Game Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4136322803147342724, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 104.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d31191e3ff12c042ae6058e1fdfebd2, type: 3}

@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
 
 	private Animator _animator;
 	private AudioSource _dialogueAudio;
-	private GameObject _dialogueBox;
-	private GameObject _objectiveText;
-	private GameObject _healthText;
+
+	[SerializeField]
+	private GameObject _dialogueBox, _objectiveText, _healthText, _inventory;
+
+	private List<GameObject> _inventoryItems;
 
 	private bool _paused;
 	private bool _requestDone;
@@ -34,6 +36,8 @@ public class GameManager : MonoBehaviour
 
 	private static Coroutine _textCoroutine;
 
+	private byte _activeItem;
+
 	private void Awake()
 	{
 		if (s_gameManager == null)
@@ -48,16 +52,31 @@ public class GameManager : MonoBehaviour
 		_dialogueAudio = GetComponent<AudioSource>();
 		_hasControl = true;
 
-		//Get The Dialogue Box & Create A New Save Manager
-		_dialogueBox = transform.GetChild(1).gameObject;
-		_objectiveText = transform.GetChild(2).gameObject;
-		_healthText = transform.GetChild(3).gameObject;
+		_inventoryItems = new List<GameObject>();
+
+		//Here We Will Get Every Item Box
+		for (byte i = 0; i < _inventory.transform.childCount; i ++)
+			_inventoryItems.Add(_inventory.transform.GetChild(i).gameObject);
 
 		_saveManager = new SaveManager();
+		SetActiveItem(0);
 
 		//This Will Load The Game
 		if (!_resetSave)
 			LoadGame();
+	}
+
+	public void SetActiveItem(byte item)
+	{
+		//First We Clamp The Value To Avoid Any Errors
+		item = (byte) Mathf.Clamp(item, 0, _inventoryItems.Count - 1);
+
+		//Here We Will Reset The Colour Of The Previous Active Item's Box & Set The New Item Box
+		_inventoryItems[_activeItem].GetComponent<Image>().color = Color.white;
+		_inventoryItems[item].GetComponent<Image>().color = Color.grey;
+
+		//Now We Just Change The Active Item
+		_activeItem = item;
 	}
 
 	public void SetObjective(string objective)
