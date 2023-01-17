@@ -36,9 +36,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
-    wrapW: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -150,9 +150,9 @@ TextureImporter:
       name: Item Box
       rect:
         serializedVersion: 2
-        x: 293
+        x: 294
         y: 120
-        width: 45
+        width: 44
         height: 49
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

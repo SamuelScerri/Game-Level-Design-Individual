@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private GameObject _dialogueBox, _objectiveText, _healthText, _inventory;
 
-	private List<GameObject> _inventoryItems;
+	[SerializeField]
+	private Item[] _equippedItems;
+	private GameObject[] _inventoryItems;
 
 	private bool _paused;
 	private bool _requestDone;
@@ -52,28 +54,53 @@ public class GameManager : MonoBehaviour
 		_dialogueAudio = GetComponent<AudioSource>();
 		_hasControl = true;
 
-		_inventoryItems = new List<GameObject>();
+		_inventoryItems = new GameObject[7];
 
-		//Here We Will Get Every Item Box
-		for (byte i = 0; i < _inventory.transform.childCount; i ++)
-			_inventoryItems.Add(_inventory.transform.GetChild(i).gameObject);
+		//Here We Update The Inventory
+		UpdateInventory();
+		SetActiveItem(0);
 
 		_saveManager = new SaveManager();
-		SetActiveItem(0);
+
 
 		//This Will Load The Game
 		if (!_resetSave)
 			LoadGame();
 	}
 
+	private void UpdateInventory()
+	{
+		//Here We Will Get Every Item Box & Reset It For Later
+		for (byte i = 0; i < _inventory.transform.childCount; i ++)
+		{
+			_inventoryItems[i] = _inventory.transform.GetChild(i).gameObject;
+
+			//Here We Reset Every Item In The Inventory
+			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
+			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 0);
+		}
+
+		//Here We Will Update The UI According To The Equipped Items In Order
+		for (byte i = 0; i < _equippedItems.Length; i++)
+		{
+			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = _equippedItems[i].Image;
+			_inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
+		}
+	}
+
+	public Item GetActiveItem()
+	{
+		return _equippedItems[_activeItem];
+	}
+
 	public void SetActiveItem(byte item)
 	{
 		//First We Clamp The Value To Avoid Any Errors
-		item = (byte) Mathf.Clamp(item, 0, _inventoryItems.Count - 1);
+		item = (byte) Mathf.Clamp(item, 0, _equippedItems.Length - 1);
 
 		//Here We Will Reset The Colour Of The Previous Active Item's Box & Set The New Item Box
 		_inventoryItems[_activeItem].GetComponent<Image>().color = Color.white;
-		_inventoryItems[item].GetComponent<Image>().color = Color.grey;
+		_inventoryItems[item].GetComponent<Image>().color = new Color(.8f, .8f, .8f);
 
 		//Now We Just Change The Active Item
 		_activeItem = item;
