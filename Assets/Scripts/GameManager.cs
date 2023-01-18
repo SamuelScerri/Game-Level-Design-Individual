@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
 	private bool _paused;
 	private bool _requestDone;
+	private bool _craftingMenuOpened;
 
 	[SerializeField]
 	private float _dialogueTextDelay;
@@ -221,10 +222,24 @@ public class GameManager : MonoBehaviour
 		return s_gameManager._hasControl;
 	}
 
+	private static void ToggleCraftingMenu()
+	{
+		s_gameManager._animator.SetTrigger("Toggle Crafting Menu");
+
+		s_gameManager._craftingMenuOpened = s_gameManager._craftingMenuOpened ? false : true;
+
+		if (!s_gameManager._craftingMenuOpened)
+			GiveControl();
+		else TakeControl();
+	}
+
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape) && _textCoroutine == null)
+		if (Input.GetKeyDown(KeyCode.Escape) && _textCoroutine == null && !_craftingMenuOpened)
 			TogglePause();
+
+		if (Input.GetKeyDown("c") && !_paused)
+			ToggleCraftingMenu();
 
 		EventSystem.current.SetSelectedGameObject(null);
 	}
