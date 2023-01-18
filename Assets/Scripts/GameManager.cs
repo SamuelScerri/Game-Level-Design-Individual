@@ -286,6 +286,7 @@ public class GameManager : MonoBehaviour
 	public static void QuitGame()
 	{
 		SceneManager.LoadScene(0);
+		Time.timeScale = 1;
 	}
 
 	//This Will Save The Game By Converting The Save Manager Data To A Json File
