@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 	private bool _requestDone;
 	private bool _craftingMenuOpened;
 
-	private static bool s_loadWithData;
+	public static bool s_loadWithData;
 
 	[SerializeField]
 	private float _dialogueTextDelay;
@@ -87,8 +87,11 @@ public class GameManager : MonoBehaviour
 
 		Debug.Log("Starting");
 
+		Debug.Log(s_loadWithData);
+
 		if (s_loadWithData)
 		{
+			Debug.Log("Should Load");
 			LoadGame();
 			s_loadWithData = false;
 		}
@@ -282,8 +285,7 @@ public class GameManager : MonoBehaviour
 
 	public static void QuitGame()
 	{
-		Debug.Log("Game Has Ended");
-		Application.Quit();
+		SceneManager.LoadScene(0);
 	}
 
 	//This Will Save The Game By Converting The Save Manager Data To A Json File
