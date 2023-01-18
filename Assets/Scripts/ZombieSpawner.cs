@@ -20,7 +20,7 @@ public class ZombieSpawner : MonoBehaviour
 		GameObject newZombie = Instantiate(_zombie, transform.position, Quaternion.identity) as GameObject;
 		newZombie.GetComponent<Zombie>()._currentState = State.Chasing;
 
-		yield return new WaitForSeconds(30);
+		yield return new WaitForSeconds(60);
 		_spawnZombiesCoroutine = null;
 	}
 }
