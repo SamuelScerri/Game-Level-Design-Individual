@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85248b4bdef70d0468595c609ced3169, type: 3}
   m_Name: Advanced Health Potion
   m_EditorClassIdentifier: 
+  Name: 
   Image: {fileID: 21300000, guid: 76b3887a70d95124581d5828d08a49a6, type: 3}
   IsWeapon: 0
   Strength: 20
   Value: 20
+  HandsNeeded: 4

@@ -9,15 +9,18 @@ public class Item : ScriptableObject
 {
 	public Sprite Image;
 
-	public bool IsWeapon;
+	public bool IsWeapon, IsCraftable;
 	public int Strength;
 	public byte Value;
+	public byte HandsNeeded;
 
-	public Item(Sprite image, bool isWeapon, byte strength, byte newValue)
+	public Item(Sprite image, bool isCraftable, bool isWeapon, byte strength, byte newValue, byte handsNeeded)
 	{
 		IsWeapon = isWeapon;
+		IsCraftable = isCraftable;
 		Strength = strength;
 		Image = image;
 		Value = newValue;
+		HandsNeeded = handsNeeded;
 	}
 }

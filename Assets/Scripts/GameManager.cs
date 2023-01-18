@@ -81,8 +81,10 @@ public class GameManager : MonoBehaviour
 		
 		for (byte i = 0; i < s_gameManager._craftingItemsInMenu.Length; i ++)
 		{
-			s_gameManager._craftingMenu.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(() => Debug.Log("Hello!"));
-			s_gameManager._craftingMenu.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = s_gameManager._craftingItemsInMenu[i].Image;
+			Item craftingItem = s_gameManager._craftingItemsInMenu[i];
+
+			s_gameManager._craftingMenu.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(() => CraftItem(craftingItem));
+			s_gameManager._craftingMenu.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = craftingItem.Image;
 		}
 
 		Debug.Log("Starting");
@@ -257,6 +259,26 @@ public class GameManager : MonoBehaviour
 		if (!s_gameManager._craftingMenuOpened)
 			GiveControl();
 		else TakeControl();
+	}
+
+	private static void CraftItem(Item item)
+	{
+		byte countHands = 0;
+
+		foreach (Item items in s_gameManager._equippedItems)
+			if (items.IsCraftable) countHands ++;
+
+		Debug.Log(countHands);
+
+		if (countHands >= item.HandsNeeded)
+		{
+			for (byte i = 0; i < s_gameManager._equippedItems.Count; i++)
+			{
+				if (s_gameManager._equippedItems[i].IsCraftable)
+					s_gameManager._equippedItems.RemoveAt(i);
+			}
+			GiveItem(item);
+		}
 	}
 
 	private void Update()

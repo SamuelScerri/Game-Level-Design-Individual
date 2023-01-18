@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85248b4bdef70d0468595c609ced3169, type: 3}
   m_Name: Basic Health Potion
   m_EditorClassIdentifier: 
+  Name: 
   Image: {fileID: 21300000, guid: 5f6e443ecd7e8124da4ad629aae7face, type: 3}
   IsWeapon: 0
   Strength: 10
   Value: 10
+  HandsNeeded: 2

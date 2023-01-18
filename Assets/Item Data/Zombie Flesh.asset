@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Image: {fileID: -942799715, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
   IsWeapon: 0
+  IsCraftable: 1
   Strength: -5
   Value: 0
+  HandsNeeded: 0
