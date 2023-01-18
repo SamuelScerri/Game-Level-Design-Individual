@@ -282,6 +282,7 @@ public class GameManager : MonoBehaviour
 						s_gameManager._equippedItems.RemoveAt(i);
 
 			GiveItem(item);
+			SetActiveItem(s_gameManager._activeItem);
 		}
 	}
 

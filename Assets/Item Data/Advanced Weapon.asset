@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85248b4bdef70d0468595c609ced3169, type: 3}
   m_Name: Advanced Weapon
   m_EditorClassIdentifier: 
-  Name: 
   Image: {fileID: 813408200, guid: 8da67cf3780bc33489bf5b6411eee311, type: 3}
   IsWeapon: 1
+  IsCraftable: 0
   Strength: 2
   Value: 50
-  HandsNeeded: 8
+  HandsNeeded: 4
