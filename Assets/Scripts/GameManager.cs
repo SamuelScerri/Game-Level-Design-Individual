@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 /*
 	This Is The Game Manager, To Be Honest This Could Have Been Seperated Into Multiple Classes Like The Player,
 	But It Has Became A Bit Unmaintanable & Seperating Would Be A Waste Of Time
@@ -33,6 +35,8 @@ public class GameManager : MonoBehaviour
 	private bool _paused;
 	private bool _requestDone;
 	private bool _craftingMenuOpened;
+
+	private static bool s_loadWithData;
 
 	[SerializeField]
 	private float _dialogueTextDelay;
@@ -74,7 +78,7 @@ public class GameManager : MonoBehaviour
 
 		_inventoryItems = new GameObject[7];
 		_saveManager = new SaveManager();
-
+		
 		for (byte i = 0; i < s_gameManager._craftingItemsInMenu.Length; i ++)
 		{
 			s_gameManager._craftingMenu.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(() => Debug.Log("Hello!"));
@@ -83,8 +87,17 @@ public class GameManager : MonoBehaviour
 
 		Debug.Log("Starting");
 
+		if (s_loadWithData)
+		{
+			LoadGame();
+			s_loadWithData = false;
+		}
+
+		else
+			ObtainCurrency(0);
+
 		UpdateInventory();
-		ObtainCurrency(0);
+		
 
 		//Here We Update The Inventory
 		SetActiveItem(0);
@@ -283,15 +296,25 @@ public class GameManager : MonoBehaviour
 		s_gameManager._saveManager.PlayerCurrency = s_gameManager._currency;
 		s_gameManager._saveManager.PlayerHealth = s_player.GetComponent<HealthManager>().GetHealth();
 
-		string jsonData = JsonUtility.ToJson(s_gameManager._saveManager);
-		s_gameManager.StartCoroutine(s_gameManager.PostRequest("samuelscerrig1.pythonanywhere.com/api/savedata", jsonData));
+		//We Will Only Save When The Player Is Not Dead
+		if (s_gameManager._saveManager.PlayerHealth > 0)
+		{
+			string jsonData = JsonUtility.ToJson(s_gameManager._saveManager);
+			s_gameManager.StartCoroutine(s_gameManager.PostRequest("samuelscerrig1.pythonanywhere.com/api/savedata", jsonData));
+		}
+	}
+
+	public static void ReloadScene()
+	{
+		GameManager.s_loadWithData = true;
+		SceneManager.LoadScene(1);
 	}
 
 	//A Helper Function For Readability
 	public static void LoadGame()
 	{
 		Debug.Log("Loading Game");
-		TogglePause();
+		Time.timeScale = 1;
 
 		s_gameManager.StartCoroutine(s_gameManager.GetRequest("samuelscerrig1.pythonanywhere.com/api/getdata"));
 	}
@@ -353,6 +376,8 @@ public class GameManager : MonoBehaviour
 		ObtainCurrency(0);
 		UpdateCurrencyUI();
 		UpdateInventory();
+
+		
 	}
 
 	//This Will Process The Dialogue Object & Display In Sections

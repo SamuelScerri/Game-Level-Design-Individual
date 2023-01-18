@@ -43,7 +43,10 @@ public class PlayerInventory : MonoBehaviour
 
 			if (Input.GetMouseButtonDown(0) && !GameManager.GetActiveItem().IsWeapon)
 			{
-				GetComponent<HealthManager>().GainHealth(GameManager.GetActiveItem().Strength);
+				if (GameManager.GetActiveItem().Strength > 0)
+					GetComponent<HealthManager>().GainHealth((byte) GameManager.GetActiveItem().Strength);
+				else GetComponent<HealthManager>().Damage((byte) Mathf.Abs(GameManager.GetActiveItem().Strength));
+
 				GameManager.RemoveActiveItem();
 				_equippedItemSprite.sprite = GameManager.GetActiveItem().Image;
 
@@ -51,7 +54,7 @@ public class PlayerInventory : MonoBehaviour
 				_source.Play();
 			}
 
-			else GetComponent<PlayerAttack>().CheckAttack(GameManager.GetActiveItem().Strength);
+			else GetComponent<PlayerAttack>().CheckAttack((byte) GameManager.GetActiveItem().Strength);
 		}
 	}
 }

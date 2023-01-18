@@ -1010,7 +1010,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2122466034927525804}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: ReloadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
