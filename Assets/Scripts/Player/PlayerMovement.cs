@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 		_animator = transform.GetChild(0).GetComponent<Animator>();
 		_source = GetComponents<AudioSource>()[2];
 
+
+
 		//Here We Will Set This Player As The Main Player, This Will Allow Us To Access The Player More Easily
 		GameManager.s_player = gameObject;
 		GameManager.GiveControl();
