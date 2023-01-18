@@ -291,7 +291,7 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Escape) && _textCoroutine == null && !_craftingMenuOpened)
 			TogglePause();
 
-		if (Input.GetKeyDown("c") && !_paused)
+		if (Input.GetKeyDown("c") && !_paused && _textCoroutine == null)
 			ToggleCraftingMenu();
 
 		EventSystem.current.SetSelectedGameObject(null);
