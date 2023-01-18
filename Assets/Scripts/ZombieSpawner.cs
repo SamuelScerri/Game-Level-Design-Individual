@@ -9,6 +9,8 @@ public class ZombieSpawner : MonoBehaviour
 
 	private Coroutine _spawnZombiesCoroutine;
 
+	private byte _spawnTimer = 60;
+
 	private void Update()
 	{
 		if (_spawnZombiesCoroutine == null)
@@ -20,7 +22,9 @@ public class ZombieSpawner : MonoBehaviour
 		GameObject newZombie = Instantiate(_zombie, transform.position, Quaternion.identity) as GameObject;
 		newZombie.GetComponent<Zombie>()._currentState = State.Chasing;
 
-		yield return new WaitForSeconds(60);
+		yield return new WaitForSeconds((float) _spawnTimer);
+
+		_spawnTimer = (byte) Mathf.Clamp(_spawnTimer - 10, 15, Mathf.Infinity);
 		_spawnZombiesCoroutine = null;
 	}
 }
