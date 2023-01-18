@@ -13,7 +13,7 @@ public enum State
 public class Zombie : MonoBehaviour
 {
 	[SerializeField]
-	private State _currentState;
+	public State _currentState;
 
 	[SerializeField]
 	private byte _attackCooldown;
