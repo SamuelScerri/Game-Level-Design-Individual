@@ -9,6 +9,7 @@ TagManager:
   - Interactable
   - Collectable
   - Map
+  - Zombie Spawner
   layers:
   - Default
   - TransparentFX
