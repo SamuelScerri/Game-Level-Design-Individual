@@ -119,6 +119,8 @@ public class GameManager : MonoBehaviour
 			//Here We Reset Every Item In The Inventory
 			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = null;
 			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = new Color(0, 0, 0, 0);
+
+			s_gameManager._inventoryItems[i].transform.GetChild(1).gameObject.SetActive(false);
 		}
 
 		//Here We Will Update The UI According To The Equipped Items In Order
@@ -126,6 +128,8 @@ public class GameManager : MonoBehaviour
 		{
 			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().sprite = s_gameManager._equippedItems[i].Image;
 			s_gameManager._inventoryItems[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
+			s_gameManager._inventoryItems[i].transform.GetChild(1).gameObject.SetActive(true);
+			s_gameManager._inventoryItems[i].transform.GetChild(1).GetComponent<Text>().text = s_gameManager._equippedItems[i].Strength.ToString();
 		}
 	}
 
