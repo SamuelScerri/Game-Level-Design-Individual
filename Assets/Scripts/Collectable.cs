@@ -19,10 +19,13 @@ public class Collectable : MonoBehaviour
 	{
 		if (collider.gameObject.tag == "Player")
 		{
-			GameManager.ObtainCurrency(_currencyAmount);
-
 			if (_itemToGive != null)
+			{
 				GameManager.GiveItem(_itemToGive);
+				GameManager.ObtainCurrency(_itemToGive.Value);
+			}
+
+			else GameManager.ObtainCurrency(_currencyAmount);
 
 			Destroy(this.gameObject);
 		}

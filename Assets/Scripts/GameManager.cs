@@ -20,10 +20,14 @@ public class GameManager : MonoBehaviour
 	private AudioSource _dialogueAudio;
 
 	[SerializeField]
-	private GameObject _dialogueBox, _objectiveText, _healthText, _currencyText, _inventory;
+	private GameObject _dialogueBox, _objectiveText, _healthText, _currencyText, _inventory, _craftingMenu;
 
 	[SerializeField]
 	private List<Item> _equippedItems;
+
+	[SerializeField]
+	private Item[] _craftingItemsInMenu;
+
 	private GameObject[] _inventoryItems;
 
 	private bool _paused;
@@ -70,6 +74,12 @@ public class GameManager : MonoBehaviour
 
 		_inventoryItems = new GameObject[7];
 		_saveManager = new SaveManager();
+
+		for (byte i = 0; i < s_gameManager._craftingItemsInMenu.Length; i ++)
+		{
+			s_gameManager._craftingMenu.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(() => Debug.Log("Hello!"));
+			s_gameManager._craftingMenu.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = s_gameManager._craftingItemsInMenu[i].Image;
+		}
 
 		Debug.Log("Starting");
 

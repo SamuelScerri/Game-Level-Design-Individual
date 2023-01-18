@@ -104,7 +104,7 @@ MonoBehaviour:
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -237,7 +237,7 @@ MonoBehaviour:
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -450,7 +450,7 @@ MonoBehaviour:
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -1634,9 +1634,17 @@ MonoBehaviour:
   _healthText: {fileID: 6933924418929056000}
   _currencyText: {fileID: 1318244997}
   _inventory: {fileID: 2120870536}
+  _craftingMenu: {fileID: 6723633722633890019}
   _equippedItems:
   - {fileID: 11400000, guid: cc9cd2ccc3d6ba84ea4a324807f1fc94, type: 2}
   - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
+  _craftingItemsInMenu:
+  - {fileID: 11400000, guid: ee7dee41755693b40914e92f9303be6f, type: 2}
+  - {fileID: 11400000, guid: cc8854291c75af141aa4dcdae3a27139, type: 2}
+  - {fileID: 11400000, guid: 60d9e5e29e472074b88e7c0671b16168, type: 2}
+  - {fileID: 11400000, guid: cc9cd2ccc3d6ba84ea4a324807f1fc94, type: 2}
+  - {fileID: 11400000, guid: 40517981dff6bf649bead0ef07056b74, type: 2}
+  - {fileID: 11400000, guid: 42220d30fc913224fa54947f70711e4c, type: 2}
   _dialogueTextDelay: 0.04
   _resetSave: 0
   _currency: 0
