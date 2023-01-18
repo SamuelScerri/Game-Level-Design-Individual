@@ -272,11 +272,11 @@ public class GameManager : MonoBehaviour
 
 		if (countHands >= item.HandsNeeded)
 		{
-			for (byte i = 0; i < s_gameManager._equippedItems.Count; i++)
-			{
-				if (s_gameManager._equippedItems[i].IsCraftable)
-					s_gameManager._equippedItems.RemoveAt(i);
-			}
+			//for (byte l = 0; l < countHands; l++)
+				for (byte i = 0; i < s_gameManager._equippedItems.Count; i++)
+					if (s_gameManager._equippedItems[i].IsCraftable)
+						s_gameManager._equippedItems.RemoveAt(i);
+
 			GiveItem(item);
 		}
 	}
