@@ -78,18 +78,6 @@ public class GameManager : MonoBehaviour
 
 		_inventoryItems = new GameObject[7];
 		_saveManager = new SaveManager();
-		
-		for (byte i = 0; i < s_gameManager._craftingItemsInMenu.Length; i ++)
-		{
-			Item craftingItem = s_gameManager._craftingItemsInMenu[i];
-
-			s_gameManager._craftingMenu.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(() => CraftItem(craftingItem));
-			s_gameManager._craftingMenu.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = craftingItem.Image;
-		}
-
-		Debug.Log("Starting");
-
-		Debug.Log(s_loadWithData);
 
 		if (s_loadWithData)
 		{
@@ -98,15 +86,27 @@ public class GameManager : MonoBehaviour
 			s_loadWithData = false;
 		}
 
-		else
-			ObtainCurrency(0);
+		else ObtainCurrency(0);
 
+		CreateCraftingMenu();
 		UpdateInventory();
 		
 
 		//Here We Update The Inventory
 		SetActiveItem(0);
 		
+	}
+
+	private static void CreateCraftingMenu()
+	{
+		for (byte i = 0; i < s_gameManager._craftingItemsInMenu.Length; i ++)
+		{
+			Item craftingItem = s_gameManager._craftingItemsInMenu[i];
+
+			s_gameManager._craftingMenu.transform.GetChild(i).GetComponent<Button>().onClick.AddListener(() => CraftItem(craftingItem));
+			s_gameManager._craftingMenu.transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = craftingItem.Image;
+			s_gameManager._craftingMenu.transform.GetChild(i).GetChild(1).GetComponent<Text>().text = craftingItem.HandsNeeded.ToString();
+		}
 	}
 
 	private static void UpdateInventory()
