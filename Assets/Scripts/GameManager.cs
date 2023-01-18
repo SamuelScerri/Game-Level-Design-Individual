@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-
+using UnityEngine.EventSystems;
 /*
 	This Is The Game Manager, To Be Honest This Could Have Been Seperated Into Multiple Classes Like The Player,
 	But It Has Became A Bit Unmaintanable & Seperating Would Be A Waste Of Time
@@ -225,6 +225,8 @@ public class GameManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Escape) && _textCoroutine == null)
 			TogglePause();
+
+		EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	//This Is Responsible For Pausing The Game, When The Game Is Paused The Player Won't Be Able To Control Their Character
@@ -306,8 +308,6 @@ public class GameManager : MonoBehaviour
 	*/
 	private IEnumerator GetRequest(string url)
 	{
-
-
 		UnityWebRequest uwr = UnityWebRequest.Get(url);
 		yield return uwr.SendWebRequest();
 
